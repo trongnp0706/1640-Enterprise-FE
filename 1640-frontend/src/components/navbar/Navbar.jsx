@@ -17,6 +17,8 @@ const Navbar = () => {
     const { toggle, darkMode } = useContext(DarkModeContext);
     const { currentUser, logout } = useContext(AuthContext);
 
+    console.log(currentUser)
+
     const navigate = useNavigate();
 
     const handleClick = async (e) => {
@@ -34,7 +36,7 @@ const Navbar = () => {
         <div className="navbar">
             <div className="left">
                 <Link to="/" style={{ textDecoration: "none" }}>
-                    <span>Buckety</span>
+                    <span>1640 Web Enterprise</span>
                 </Link>
                 <HomeOutlinedIcon />
                 {darkMode ? (
@@ -53,8 +55,8 @@ const Navbar = () => {
                 <EmailOutlinedIcon />
                 <NotificationsOutlinedIcon />
                 <div className="user">
-                    <img src={"/upload/" + currentUser.profilePic} alt="" />
-                    <span>{currentUser.username}</span>
+                    <img src={"/upload/" + currentUser?.data?.user?.avatar} alt="" />
+                    <span>{currentUser?.data?.user?.username}</span>
                 </div>
                 <LogoutIcon onClick={handleClick} />
             </div>

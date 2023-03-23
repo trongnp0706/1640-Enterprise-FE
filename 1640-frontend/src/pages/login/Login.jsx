@@ -20,6 +20,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        setErr(null);
         try {
             await login(inputs);
             navigate("/");
@@ -59,7 +60,7 @@ const Login = () => {
                             name="password"
                             onChange={handleChange}
                         />
-                        {err && err}
+                        {err && <div>{err.message}</div>}
                         <button type="submit">Login</button>
                     </form>
                 </div>

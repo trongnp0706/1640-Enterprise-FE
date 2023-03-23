@@ -4,9 +4,7 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
-    const [currentUser, setCurrentUser] = useState(
-        JSON.parse(localStorage.getItem("user")) || null
-    );
+    const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem("user") || null));
 
     const login = async (inputs) => {
         const res = await axios.post(
@@ -22,12 +20,14 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     const logout = async (inputs) => {
-        await axios.post("http://localhost:1313/logout");
+        await axios.get("http://localhost:1313/logout");
         setCurrentUser(null);
         localStorage.removeItem("user");
     };
 
     useEffect(() => {
+         if (!currentUser)
+             return;
         localStorage.setItem("user", JSON.stringify(currentUser));
     }, [currentUser]);
 
