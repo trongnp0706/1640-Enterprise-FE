@@ -54,7 +54,7 @@ const Navbar = () => {
                 <NotificationsOutlinedIcon />
                 <div className="user">
                     <img src={"/upload/" + currentUser.profilePic} alt="" />
-                    <span>{currentUser.name}</span>
+                    <span>{currentUser.username}</span>
                 </div>
                 <LogoutIcon onClick={handleClick} />
             </div>

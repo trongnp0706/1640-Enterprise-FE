@@ -10,7 +10,7 @@ export const AuthContextProvider = ({ children }) => {
 
     const login = async (inputs) => {
         const res = await axios.post(
-            "http://localhost:8800/api/auth/login",
+            "http://localhost:1313/login",
             inputs,
             {
                 withCredentials: true,
@@ -22,7 +22,7 @@ export const AuthContextProvider = ({ children }) => {
     };
 
     const logout = async (inputs) => {
-        await axios.post("http://localhost:8800/api/auth/logout");
+        await axios.post("http://localhost:1313/logout");
         setCurrentUser(null);
         localStorage.removeItem("user");
     };

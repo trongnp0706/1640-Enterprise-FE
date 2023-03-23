@@ -5,13 +5,13 @@ import "./login.scss";
 
 const Login = () => {
     const [inputs, setInputs] = useState({
-        username: "",
+        email: "",
         password: "",
     });
     const [err, setErr] = useState(null);
 
-    //const navigate = useNavigate();
-    //const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const navigate = useNavigate();
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     const handleChange = (e) => {
         setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -21,14 +21,16 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await login(inputs);
-            //navigate("/");
-        } catch (err) {}
+            await login(inputs);
+            navigate("/");
+        } catch (err) {
+            setErr(err.response.data);
+        }
     };
 
-    // if (currentUser) {
-    //   return <Navigate to="/" />;
-    // }
+        if (currentUser) {
+       return <Navigate to="/" />;
+     }
     return (
         <div className="login">
             <div className="card">
@@ -44,11 +46,11 @@ const Login = () => {
                 </div>
                 <div className="right">
                     <h1>Login</h1>
-                    <form>
+                    <form onSubmit={handleLogin}>
                         <input
                             type="text"
-                            placeholder="Username"
-                            name="username"
+                            placeholder="Email"
+                            name="email"
                             onChange={handleChange}
                         />
                         <input
@@ -58,7 +60,7 @@ const Login = () => {
                             onChange={handleChange}
                         />
                         {err && err}
-                        <button onClick={handleLogin}>Login</button>
+                        <button type="submit">Login</button>
                     </form>
                 </div>
             </div>
