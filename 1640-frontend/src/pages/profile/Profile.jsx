@@ -29,26 +29,21 @@ const Profile = () => {
                 <>
                     <div className="profileContainer">
                         <div className="uInfo">
-                            <div className="center">
-                                <span>{data?.data?.username}</span>
-                                <div className="info">
-                                    <div className="item">
-                                        <PlaceIcon />
-                                        <span>{data?.data?.role_ticker}</span>
-                                    </div>
-                                    <div className="item">
-                                        <LanguageIcon />
-                                        <span>{data?.data?.email}</span>
-                                    </div>
-                                </div>
+                                    <img className="avatar" src="resources/image/avatar1.jpg" alt="My Avatar"/>
+                                    <h1 className="name">{data?.data?.username}</h1>
+                                    <hr/>
+                                    <ul>
+                                        <li className="email"><strong>Email</strong>: {data?.data?.email}</li>
+                                        <li className="role"><strong>Role</strong>: {data?.data?.role_ticker}</li>
+                                        <li className="department"><strong>Department</strong>: {data?.data?.department_id}</li>
+                                    </ul>
                                 {isLoading ? (
                                     "loading"
                                 ) : userId === currentUser?.data?.user?.id ? (
-                                    <button onClick={() => setOpenUpdate(true)}>Update</button>
+                                    <button className="btn" onClick={() => setOpenUpdate(true)}>Update</button>
                                 ) : (
-                                    <button>Follow</button>
+                                    <button className="btn" >Follow</button>
                                 )}
-                            </div>
                         </div>
                     </div>
                 </>
