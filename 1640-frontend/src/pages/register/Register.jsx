@@ -36,7 +36,7 @@ const Register = () => {
         <div className="register">
             <div className="card">
                 <div className="left">
-                    <h1>1640 Web Enterprise</h1>
+                    <h1>Register</h1>
                     <p>
                         University Idea Management
                     </p>
@@ -78,7 +78,7 @@ const Register = () => {
                             name="department_id"
                             onChange={handleChange}
                         />
-                        {err && err}
+                        {err && <div>{err.message}</div>}
                         <button onClick={handleClick}>Register</button>
                     </form>
                 </div>
