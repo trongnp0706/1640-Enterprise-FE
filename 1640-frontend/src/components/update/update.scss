@@ -34,12 +34,13 @@
       }
 
       h1 {
-        color: lightgrey;
+        color: black;
+        background-color: #97deff;
+        text-align: center;
 
         @include mobile {
           font-size: 20px;
         }
-
       }
 
       form {
@@ -59,6 +60,7 @@
           gap: 10px;
           color: gray;
           font-size: 14px;
+          font-weight: bold;
 
           .imgContainer {
             position: relative;
@@ -94,8 +96,9 @@
           border: none;
           padding: 10px;
           cursor: pointer;
-          color: white;
-          background-color: #5271ff;
+          color: black;
+          background-color: #97deff;
+          font-weight: bold;
         }
       }
 
