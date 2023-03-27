@@ -84,9 +84,9 @@ const Register = () => {
               value={inputs.department_id}
               onChange={handleChange}
             >
-              <option value="FDP">FPD</option>
-              <option value="SDP">SPD</option>
-              <option value="TDP">TPD</option>
+              <option value="FDP">FDP</option>
+              <option value="SDP">SDP</option>
+              <option value="TDP">TDP</option>
             </select>
             {err && <div>{err.message}</div>}
             <button onClick={handleClick}>Register</button>
