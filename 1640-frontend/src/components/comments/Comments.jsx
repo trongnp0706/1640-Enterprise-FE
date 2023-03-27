@@ -1,1 +1,4 @@
-import "./comment.scss"
+import "./comments.scss"
+
+export default class Comments {
+}
