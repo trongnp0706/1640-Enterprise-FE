@@ -55,7 +55,7 @@ const Navbar = () => {
                 <EmailOutlinedIcon />
                 <NotificationsOutlinedIcon />
                 <Link to={`/profile/${userId}`} className="user">
-                    <img src={"/upload/" + currentUser?.data?.user?.avatar} alt="" />
+                    <img src={currentUser?.data?.user?.avatar} alt="" />
                     <span>{currentUser?.data?.user?.username}</span>
                 </Link>
                 <LogoutIcon onClick={handleClick} />
