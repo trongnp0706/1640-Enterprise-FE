@@ -139,6 +139,8 @@ const CreatePost = () => {
                             <option value="cat">CAT</option>
                             <option value="dog">DOG</option>
                         </select>
+                    </div>
+                    <div>
                         <label htmlFor="academic-year-select">Academic Year:</label>
                         <select id="academic-year-select">
                             <option value="2022">2022</option>
