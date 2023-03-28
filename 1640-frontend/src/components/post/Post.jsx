@@ -1,8 +1,9 @@
 import "./post.scss";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
+import ThumbDownOutlinedIcon from '@mui/icons-material/ThumbDownOutlined';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
-import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Link } from "react-router-dom";
 import Comments from "../comments/Comments";
@@ -12,6 +13,7 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
+import {Button} from "@mui/material";
 
 const Post = ({ post }) => {
     console.log(post)
@@ -65,7 +67,7 @@ const Post = ({ post }) => {
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
-                        <img src={currentUser?.data?.user?.avatar} alt="" />
+                        <img src={currentUser?.data?.user?.avatar} alt="avatar" />
                         <div className="details">
                             <Link
                                 to={`/profile/${post.userId}`}
@@ -98,22 +100,39 @@ const Post = ({ post }) => {
                         {/*    <FavoriteBorderOutlinedIcon onClick={handleLike} />*/}
                         {/*)}*/}
                         {/*{data?.length} Likes*/}
-                        <FavoriteOutlinedIcon
+                        <ThumbUpIcon
+                            style={{ color: "green" }}
+                        />
+                        <ThumbUpOutlinedIcon />
+                        Upvote
+                    </div>
+                    <div className="item">
+                        {/*{isLoading ? (*/}
+                        {/*    "loading"*/}
+                        {/*) : data.includes(currentUser.id) ? (*/}
+                        {/*    <FavoriteOutlinedIcon*/}
+                        {/*        style={{ color: "red" }}*/}
+                        {/*        onClick={handleLike}*/}
+                        {/*    />*/}
+                        {/*) : (*/}
+                        {/*    <FavoriteBorderOutlinedIcon onClick={handleLike} />*/}
+                        {/*)}*/}
+                        {/*{data?.length} Likes*/}
+                        <ThumbDownIcon
                             style={{ color: "red" }}
                         />
-                        <FavoriteBorderOutlinedIcon />
-                        Likes
+                        <ThumbDownOutlinedIcon />
+                        Downvote
                     </div>
                     <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                         <TextsmsOutlinedIcon />
-                        See Comments
+                        Comments
                     </div>
-                    <div className="item">
-                        <ShareOutlinedIcon />
-                        Share
+
+                    <div className="download">
+                        <Button>Download</Button>
                     </div>
                 </div>
-                {commentOpen && <Comments postId={post.id} />}
             </div>
         </div>
     );
