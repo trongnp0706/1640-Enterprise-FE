@@ -1,14 +1,19 @@
 import "./createPost.scss";
 import Image from "../../assets/img.png";
-import Map from "../../assets/map.png";
-import Friend from "../../assets/friend.png";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 const CreatePost = () => {
+    const { currentUser } = useContext(AuthContext);
+    const userId = currentUser?.data?.user?.id;
     const [file, setFile] = useState(null);
     const [content, setContent] = useState("");
+    const [title, setTitle] = useState("");
+    const [user_id, setUserId] = useState(userId);
+    const [is_anonymous, setAnonymous] = useState(false);
+    const [category_id, setCategory] = useState("CAT");
+    const [academic_year, setAcademicYear] = useState("2022");
 
     const upload = async () => {
         try {
@@ -21,13 +26,11 @@ const CreatePost = () => {
         }
     };
 
-    const { currentUser } = useContext(AuthContext);
-
     const queryClient = useQueryClient();
 
     const mutation = useMutation(
         (newPost) => {
-            return makeRequest.post("/posts", newPost);
+            return makeRequest.post("idea/add", newPost);
         },
         {
             onSuccess: () => {
@@ -41,8 +44,9 @@ const CreatePost = () => {
         e.preventDefault();
         let imgUrl = "";
         if (file) imgUrl = await upload();
-        mutation.mutate({ content, img: imgUrl });
+        mutation.mutate({ title, content, image_array: imgUrl, is_anonymous, user_id, category_id, academic_year });
         setContent("");
+        setTitle("");
         setFile(null);
     };
 
@@ -52,6 +56,12 @@ const CreatePost = () => {
                 <div className="top">
                     <div className="left">
                         <img src={currentUser?.data?.user?.avatar} alt="" />
+                        <input
+                            type="text"
+                            placeholder={`Post Title`}
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                        />
                         <input
                             type="text"
                             placeholder={`What's on your mind ${currentUser?.data?.user?.username}?`}
