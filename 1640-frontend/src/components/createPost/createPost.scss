@@ -41,12 +41,40 @@
           flex: 1;
           display: flex;
           justify-content: flex-end;
-          .file {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 0px;
-          }
+        }
+      }
+
+      .mid-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        input {
+          border: none;
+          outline: none;
+          padding: 20px 10px;
+          background-color: transparent;
+          width: 60%;
+          color: themed("textColor");
+        }
+      }
+
+      .mid-image {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        .file {
+          width: 100%;
+          max-height: 400px;
+          object-fit: cover;
+          margin-top: 10px;
+        }
+        #deleteIcon {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          color: #ff0000;
         }
       }
 
