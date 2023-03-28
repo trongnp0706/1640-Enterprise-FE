@@ -1,4 +1,3 @@
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
@@ -12,6 +11,10 @@ import { Link } from "react-router-dom";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import "./post.scss";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 const Post = ({ post }) => {
   console.log(post);
@@ -56,9 +59,21 @@ const Post = ({ post }) => {
   //     mutation.mutate(data.includes(currentUser.id));
   // };
 
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+
+  const handleMenuOpen = (event) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
+
   const handleDelete = () => {
     deleteMutation.mutate(post.id);
   };
+
+  const showDeleteButton = post.userId === currentUser.id;
 
   return (
     <div className="post">
@@ -76,10 +91,24 @@ const Post = ({ post }) => {
               <span className="date">{moment(post?.created_at).fromNow()}</span>
             </div>
           </div>
-          <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
+          {/* <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
           {menuOpen && post.userId === currentUser.id && (
             <button onClick={handleDelete}>delete</button>
-          )}
+          )} */}
+          <div>
+            <IconButton onClick={handleMenuOpen}>
+              <MoreHorizIcon />
+            </IconButton>
+            <Menu
+              anchorEl={menuAnchorEl}
+              open={Boolean(menuAnchorEl)}
+              onClose={handleMenuClose}
+            >
+              {showDeleteButton && (
+                <MenuItem onClick={handleDelete}>Delete</MenuItem>
+              )}
+            </Menu>
+          </div>
         </div>
         <div className="title">
           <h3>{post?.title}</h3>
