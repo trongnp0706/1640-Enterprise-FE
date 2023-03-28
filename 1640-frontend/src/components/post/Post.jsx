@@ -17,7 +17,6 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 const Post = ({ post }) => {
-  console.log(post);
   const [commentOpen, setCommentOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -115,7 +114,9 @@ const Post = ({ post }) => {
         </div>
         <div className="content">
           <p>{post?.content}</p>
-          <img src={currentUser?.data?.user?.avatar} alt="" />
+          {post.image_array && post.image_array.map((imageUrl, index) => (
+              <img src={imageUrl} alt={`Image ${index}`} />
+          ))}
         </div>
         <div className="info">
           <div className="item">

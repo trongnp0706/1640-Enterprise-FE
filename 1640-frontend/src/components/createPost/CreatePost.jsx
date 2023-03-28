@@ -7,7 +7,8 @@ import { makeRequest } from "../../axios";
 const CreatePost = () => {
     const { currentUser } = useContext(AuthContext);
     const userId = currentUser?.data?.user?.id;
-    const [file, setFile] = useState(null);
+    const [files, setFiles] = useState([]);
+    const [file, setFile] = useState([]);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
     const [user_id] = useState(userId);
@@ -15,11 +16,11 @@ const CreatePost = () => {
     const [category_id, setCategory] = useState("CAT");
     const [academic_year, setAcademicYear] = useState("2022");
 
-    const upload = async () => {
+    const upload = async (file) => {
         try {
             const formData = new FormData();
             formData.append("file", file);
-            const res = await makeRequest.post("/upload", formData);
+            const res = await makeRequest.post("upload", formData);
             return res.data;
         } catch (err) {
             console.log(err);
@@ -42,12 +43,24 @@ const CreatePost = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
-        let imgUrl = "";
-        if (file) imgUrl = await upload();
-        mutation.mutate({ title, content, image_array: imgUrl, is_anonymous, user_id, category_id, academic_year });
+        let imgUrls = [];
+        if (files.length > 0) {
+            for (const file of files) {
+                const uploadData = await upload(file);
+                const  imgUrl = uploadData?.data
+                imgUrls.push(imgUrl);
+            }
+        }
+        try {
+            mutation.mutate({ title, content, image_array: imgUrls, is_anonymous, user_id, category_id, academic_year });
+        }
+        catch (error){
+            console.log(error)
+        }
+
         setContent("");
         setTitle("");
-        setFile(null);
+        setFiles([]);
     };
 
     return (
@@ -70,9 +83,9 @@ const CreatePost = () => {
                         />
                     </div>
                     <div className="right">
-                        {file && (
-                            <img className="file" alt="" src={URL.createObjectURL(file)} />
-                        )}
+                        {files.map((file, index) => (
+                            <img key={index} className="file" alt="" src={URL.createObjectURL(file)} />
+                        ))}
                     </div>
                 </div>
                 <hr />
@@ -82,7 +95,11 @@ const CreatePost = () => {
                             type="file"
                             id="file"
                             style={{ display: "none" }}
-                            onChange={(e) => setFile(e.target.files[0])}
+                            onChange={(e) => {
+                                const selectedFiles = Array.from(e.target.files);
+                                setFiles([...files, ...selectedFiles]);
+                            }}
+                            multiple
                         />
                         <label htmlFor="file">
                             <div className="item">
