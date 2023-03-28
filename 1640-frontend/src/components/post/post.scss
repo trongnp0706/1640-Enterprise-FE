@@ -1,6 +1,8 @@
 @import "../../style.scss";
 
 .post {
+  margin-bottom: 10px;
+  margin-left: 10px;
   @include themify($themes) {
     -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
     -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
@@ -11,7 +13,6 @@
 
     .container {
       padding: 20px;
-
       .user {
         display: flex;
         align-items: center;
@@ -23,34 +24,26 @@
           gap: 20px;
 
           img {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             object-fit: cover;
           }
 
           .details {
+            margin-top: 10px;
             display: flex;
             flex-direction: column;
 
             .name {
-              font-weight: 500;
+              font-weight: bold;
+              font-size: 20px;
             }
 
             .date {
               font-size: 12px;
             }
           }
-        }
-        button {
-          position: absolute;
-          top: 30px;
-          right: 0;
-          border: none;
-          background-color: #f0544f;
-          padding: 5px;
-          cursor: pointer;
-          color: white;
         }
       }
 
@@ -59,9 +52,9 @@
 
         img {
           width: 100%;
-          max-height: 500px;
+          max-height: 400px;
           object-fit: cover;
-          margin-top: 20px;
+          margin-top: 10px;
         }
       }
 
@@ -75,6 +68,22 @@
           align-items: center;
           gap: 10px;
           cursor: pointer;
+          font-size: 14px;
+        }
+
+        .item:hover {
+          cursor: pointer;
+          background-color: #f5f5f5;
+        }
+
+        .download button {
+          background-color: #4caf50;
+          border: none;
+          color: white;
+          padding: 8px 16px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
           font-size: 14px;
         }
       }
