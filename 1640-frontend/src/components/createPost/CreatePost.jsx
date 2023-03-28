@@ -10,7 +10,7 @@ const CreatePost = () => {
     const [file, setFile] = useState(null);
     const [content, setContent] = useState("");
     const [title, setTitle] = useState("");
-    const [user_id, setUserId] = useState(userId);
+    const [user_id] = useState(userId);
     const [is_anonymous, setAnonymous] = useState(false);
     const [category_id, setCategory] = useState("CAT");
     const [academic_year, setAcademicYear] = useState("2022");

@@ -27,7 +27,7 @@ const Profile = () => {
             <div className="uInfo">
               <img
                 className="avatar"
-                src={currentUser?.data?.user?.avatar}
+                src={data?.data?.avatar}
                 alt="My Avatar"
               />
               <h1 className="name">{data?.data?.username}</h1>

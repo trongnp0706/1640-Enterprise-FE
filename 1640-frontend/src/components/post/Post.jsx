@@ -65,13 +65,13 @@ const Post = ({ post }) => {
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img src={currentUser?.data?.user?.avatar} alt="avatar" />
+            <img src={post?.avatar} alt="avatar" />
             <div className="details">
               <Link
                 to={`/profile/${post?.user_id}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <span className="name">{currentUser?.data?.user?.username}</span>
+                <span className="name">{post?.username}</span>
               </Link>
               <span className="date">{moment(post?.created_at).fromNow()}</span>
             </div>
