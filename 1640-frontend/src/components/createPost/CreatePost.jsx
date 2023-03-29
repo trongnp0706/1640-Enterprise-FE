@@ -1,6 +1,6 @@
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import SendIcon from "@mui/icons-material/Send";
-import ToggleOffIcon from "@mui/icons-material/ToggleOff";
+import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
@@ -78,7 +78,6 @@ const CreatePost = () => {
     setAnonymous((prev) => !prev);
   };
 
-
   return (
     <div className="share">
       <div className="container">
@@ -142,15 +141,15 @@ const CreatePost = () => {
             </label>
             <div className="item" onClick={handleAnonymous}>
               {is_anonymous ? (
-                  <>
-                    <ToggleOnIcon style={{ fontSize: "50px" }} />
-                    <span>Anonymous</span>
-                  </>
+                <>
+                  <ToggleOnIcon style={{ fontSize: "50px" }} />
+                  <span>Anonymous</span>
+                </>
               ) : (
-                  <>
-                    <ToggleOffIcon style={{ fontSize: "50px" }} />
-                    <span>Anonymous</span>
-                  </>
+                <>
+                  <ToggleOffOutlinedIcon style={{ fontSize: "50px" }} />
+                  <span>Anonymous</span>
+                </>
               )}
             </div>
           </div>
