@@ -33,14 +33,9 @@
             outline: none;
             padding: 20px 10px;
             background-color: transparent;
-            width: 60%;
+            width: 100%;
             color: themed("textColor");
           }
-        }
-        .right {
-          flex: 1;
-          display: flex;
-          justify-content: flex-end;
         }
       }
 
@@ -54,8 +49,9 @@
           outline: none;
           padding: 20px 10px;
           background-color: transparent;
-          width: 60%;
+          width: 100%;
           color: themed("textColor");
+          font-size: 20px;
         }
       }
 
