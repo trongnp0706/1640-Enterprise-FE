@@ -43,8 +43,8 @@ const Post = ({ post }) => {
   //     }
   // );
   const deleteMutation = useMutation(
-    (postId) => {
-      return makeRequest.delete("/posts/" + postId);
+    (postData) => {
+      return makeRequest.delete("idea/delete", { data: postData });
     },
     {
       onSuccess: () => {
@@ -69,7 +69,8 @@ const Post = ({ post }) => {
   };
 
   const handleDelete = () => {
-    deleteMutation.mutate(post.id);
+    console.log(post?.id);
+    deleteMutation.mutate({ id: post?.id });
   };
 
   const showDeleteButton = post.userId === currentUser.id;
@@ -90,10 +91,6 @@ const Post = ({ post }) => {
               <span className="date">{moment(post?.created_at).fromNow()}</span>
             </div>
           </div>
-          {/* <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} />
-          {menuOpen && post.userId === currentUser.id && (
-            <button onClick={handleDelete}>delete</button>
-          )} */}
           <div>
             <IconButton onClick={handleMenuOpen}>
               <MoreHorizIcon />
