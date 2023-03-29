@@ -123,14 +123,14 @@
 
         select {
           font-family: Arial, sans-serif;
-          font-size: 16px;
+          font-size: 13px;
           border: 1px solid #ccc;
           border-radius: 4px;
           padding: 8px;
           background-color: #fff;
           color: #333;
           width: 100%;
-          max-width: 400px;
+          height: 50%;
           box-sizing: border-box;
         }
 
@@ -141,7 +141,7 @@
 
         select option {
           font-family: Arial, sans-serif;
-          font-size: 16px;
+          font-size: 12px;
           color: #333;
         }
       }
