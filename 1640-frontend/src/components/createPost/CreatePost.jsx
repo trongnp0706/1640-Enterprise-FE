@@ -74,6 +74,11 @@ const CreatePost = () => {
     setFiles([]);
   };
 
+  const handleAnonymous = () => {
+    setAnonymous((prev) => !prev);
+  };
+
+
   return (
     <div className="share">
       <div className="container">
@@ -135,10 +140,18 @@ const CreatePost = () => {
                 <span>Add Image</span>
               </div>
             </label>
-            <div className="item">
-              <ToggleOffIcon style={{ fontSize: "50px" }} />
-              <ToggleOnIcon style={{ fontSize: "50px" }} />
-              <span>Anonymous</span>
+            <div className="item" onClick={handleAnonymous}>
+              {is_anonymous ? (
+                  <>
+                    <ToggleOnIcon style={{ fontSize: "50px" }} />
+                    <span>Anonymous</span>
+                  </>
+              ) : (
+                  <>
+                    <ToggleOffIcon style={{ fontSize: "50px" }} />
+                    <span>Anonymous</span>
+                  </>
+              )}
             </div>
           </div>
           <div>
