@@ -80,16 +80,28 @@ const Post = ({ post }) => {
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            <img src={post?.avatar} alt="avatar" />
-            <div className="details">
-              <Link
-                to={`/profile/${post?.user_id}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <span className="name">{post?.username}</span>
-              </Link>
-              <span className="date">{moment(post?.created_at).fromNow()}</span>
-            </div>
+            {post?.is_anonymous ? (
+                <>
+                  <img src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/anonymous-512.png" alt="avatar" />
+                  <div className="details">
+                      <span className="name">Anonymous</span>
+                    <span className="date">{moment(post?.created_at).fromNow()}</span>
+                  </div>
+                </>
+            ) : (
+                <>
+                  <img src={post?.avatar} alt="avatar" />
+                  <div className="details">
+                    <Link
+                        to={`/profile/${post?.user_id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <span className="name">{post?.username}</span>
+                    </Link>
+                    <span className="date">{moment(post?.created_at).fromNow()}</span>
+                  </div>
+                </>
+            )}
           </div>
           <div>
             <IconButton onClick={handleMenuOpen}>
