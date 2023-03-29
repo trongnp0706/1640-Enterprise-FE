@@ -120,6 +120,30 @@
             border-radius: 3px;
           }
         }
+
+        select {
+          font-family: Arial, sans-serif;
+          font-size: 16px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          padding: 8px;
+          background-color: #fff;
+          color: #333;
+          width: 100%;
+          max-width: 400px;
+          box-sizing: border-box;
+        }
+
+        select:hover,
+        select:focus {
+          border-color: #666;
+        }
+
+        select option {
+          font-family: Arial, sans-serif;
+          font-size: 16px;
+          color: #333;
+        }
       }
     }
   }

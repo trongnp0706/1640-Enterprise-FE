@@ -142,27 +142,31 @@ const CreatePost = () => {
             </div>
           </div>
           <div>
-               <label htmlFor="category-select">Category:</label>
-               <select id="category-select"
-                       name="category_id"
-                        value={category_id}
-                        onChange={(e) => setCategory(e.target.value)}
-                >
-                    <option value="CAT">CAT</option>
-                    <option value="DOG">DOG</option>s
-                </select>
+            <label htmlFor="category-select"></label>
+            <select
+              id="category-select"
+              name="category_id"
+              value={category_id}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">Select Category</option>
+              <option value="CAT">CAT</option>
+              <option value="DOG">DOG</option>s
+            </select>
           </div>
           <div>
-                <label htmlFor="academic-year-select">Academic Year:</label>
-                <select id="academic-year-select"
-                        name="academic_year"
-                        value={academic_year}
-                        onChange={(e) => setAcademicYear(e.target.value)}
-                >
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                </select>
-                    </div>
+            <label htmlFor="academic-year-select"></label>
+            <select
+              id="academic-year-select"
+              name="academic_year"
+              value={academic_year}
+              onChange={(e) => setAcademicYear(e.target.value)}
+            >
+              <option value="">Select Year</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
           <div className="right">
             <SendIcon
               onClick={handleClick}
