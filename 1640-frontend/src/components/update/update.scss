@@ -12,13 +12,14 @@
     align-items: center;
     justify-content: center;
     z-index: 999;
+    padding-top: 10px;
 
     .wrapper {
       margin: auto;
       width: 40%;
-      height: 70%;
+      height: 100%;
       background-color: themed("bg");
-      padding: 50px;
+      padding: 70px;
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -39,14 +40,14 @@
         text-align: center;
 
         @include mobile {
-          font-size: 20px;
+          font-size: 100%;
         }
       }
 
       form {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 10px;
 
         .files {
           display: flex;
@@ -57,9 +58,9 @@
         label {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 20px;
           color: gray;
-          font-size: 14px;
+          font-size: 100%;
           font-weight: bold;
 
           .imgContainer {
@@ -84,7 +85,26 @@
           }
         }
 
+        select {
+          display: block;
+          width: 100%;
+          height: 30px;
+          font-size: 17px;
+          font-family: Arial, sans-serif;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          background-color: #fff;
+          color: #333;
+        }
+
+        select option {
+          font-size: 17px;
+          font-family: Arial, sans-serif;
+          color: #333;
+        }
+
         input {
+          font-size: 17px;
           padding: 5px;
           border: none;
           border-bottom: 1px solid themed("border");
