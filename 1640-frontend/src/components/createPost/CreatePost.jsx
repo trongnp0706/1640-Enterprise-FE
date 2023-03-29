@@ -161,7 +161,7 @@ const CreatePost = () => {
               value={category_id}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="">Category</option>
+              <option value="CAT">Category</option>
               <option value="CAT">CAT</option>
               <option value="DOG">DOG</option>s
             </select>
@@ -174,7 +174,7 @@ const CreatePost = () => {
               value={academic_year}
               onChange={(e) => setAcademicYear(e.target.value)}
             >
-              <option value="">Year</option>
+              <option value="2022">Year</option>
               <option value="2022">2022</option>
               <option value="2023">2023</option>
             </select>
