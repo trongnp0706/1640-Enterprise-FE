@@ -1,21 +1,34 @@
-import { useQueryClient } from "@tanstack/react-query";
+  import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import "./update.scss";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const Update = ({ setOpenUpdate }) => {
   const { currentUser } = useContext(AuthContext);
+  const [profile, setProfile] = useState(null);
   const [inputs, setInputs] = useState({
-    email: "",
+    email: currentUser?.data?.user?.email,
     password: "",
-    user_name: "",
-    role_ticker: "USR",
-    department_id: "FDP",
+    user_name: currentUser?.data?.user?.username,
+    role_ticker: currentUser?.data?.user?.role_ticker,
+    department_id: currentUser?.data?.user?.department_id,
     id: currentUser?.data?.user?.id,
   });
   const [err, setErr] = useState(null);
+
+  const upload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await makeRequest.post("/upload", formData);
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -25,16 +38,33 @@ const Update = ({ setOpenUpdate }) => {
 
   const navigate = useNavigate();
 
+  const mutation = useMutation(
+      (user) => {
+        return makeRequest.patch("user/update", user);
+      },
+      {
+        onSuccess: () => {
+          // Invalidate and refetch
+          queryClient.invalidateQueries(["user"]);
+        },
+      }
+  );
+
   const handleClick = async (e) => {
     e.preventDefault();
+    let profileUrl;
+    let avatarUrl;
+    profileUrl = profile ? await upload(profile) : currentUser?.data?.user?.avatar;
+    avatarUrl = profileUrl?.data;
     try {
-      await makeRequest.patch("user/update", inputs);
-      await queryClient.invalidateQueries(["user"]);
+      mutation.mutate({...inputs, avatar: avatarUrl})
     } catch (err) {
       setErr(err.response.data);
-      throw err;
+      console.log(err)
     }
+
     setOpenUpdate(false);
+    setProfile(null);
   };
 
   return (
@@ -42,6 +72,28 @@ const Update = ({ setOpenUpdate }) => {
       <div className="wrapper">
         <h1>Update Your Profile</h1>
         <form>
+          <div className="files">
+            <label htmlFor="profile">
+              <span>Profile Picture</span>
+              <div className="imgContainer">
+                <img
+                    src={
+                      profile
+                          ? URL.createObjectURL(profile)
+                          : currentUser?.data?.user?.avatar
+                    }
+                    alt=""
+                />
+                <CloudUploadIcon className="icon" />
+              </div>
+            </label>
+            <input
+                type="file"
+                id="profile"
+                style={{ display: "none" }}
+                onChange={(e) => setProfile(e.target.files[0])}
+            />
+          </div>
           <label>Email</label>
           <input
             type="text"

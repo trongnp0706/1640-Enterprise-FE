@@ -136,8 +136,8 @@ const CreatePost = () => {
                     <div>
                         <label htmlFor="category-select">Category:</label>
                         <select id="category-select">
-                            <option value="cat">CAT</option>
-                            <option value="dog">DOG</option>
+                            <option value="CAT">CAT</option>
+                            <option value="DOG">DOG</option>
                         </select>
                     </div>
                     <div>
