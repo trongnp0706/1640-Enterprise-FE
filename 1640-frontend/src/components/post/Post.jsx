@@ -33,18 +33,6 @@ const Post = ({ post }) => {
 
   const queryClient = useQueryClient();
 
-  // const mutation = useMutation(
-  //     (liked) => {
-  //         if (liked) return makeRequest.delete("/likes?postId=" + post.id);
-  //         return makeRequest.post("/likes", { postId: post.id });
-  //     },
-  //     {
-  //         onSuccess: () => {
-  //             // Invalidate and refetch
-  //             queryClient.invalidateQueries(["likes"]);
-  //         },
-  //     }
-  // );
   const deleteMutation = useMutation(
     (postData) => {
       return makeRequest.delete("idea/delete", {data: postData });
@@ -68,10 +56,6 @@ const Post = ({ post }) => {
         },
       }
   );
-
-  // const handleLike = () => {
-  //     mutation.mutate(data.includes(currentUser.id));
-  // };
 
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
 
