@@ -47,7 +47,7 @@ const Post = ({ post }) => {
   // );
   const deleteMutation = useMutation(
     (postData) => {
-      return makeRequest.delete("idea/delete", { data: postData });
+      return makeRequest.delete("idea/delete", { postData });
     },
     {
       onSuccess: () => {
@@ -59,12 +59,12 @@ const Post = ({ post }) => {
 
   const voteMutation = useMutation(
       (voteData) => {
-        return makeRequest.post("vote/handle", { data: voteData });
+        return makeRequest.post("vote/handle", voteData);
       },
       {
         onSuccess: () => {
           // Invalidate and refetch
-          queryClient.invalidateQueries(["posts"]);
+          queryClient.invalidateQueries(["vote", post.id]);
         },
       }
   );
@@ -148,48 +148,48 @@ const Post = ({ post }) => {
         <div className="info">
           {isLoading ? (
               "loading"
-          ) : data?.user_vote === "" ? (
+          ) : data?.data?.user_vote === "" ? (
               <>
                 <div className="item" onClick={() => handleVote("up")}>
                   <ThumbUpOutlinedIcon />
-                  {data?.upvotes}
+                  {data?.data?.upvote}
                 </div>
                 <div className="item" onClick={() => handleVote("down")}>
                   <ThumbDownOutlinedIcon />
-                  {data?.downvotes}
+                  {data?.data?.downvote}
                 </div>
               </>
-          ) : data?.user_vote === "up" ? (
+          ) : data?.data?.user_vote=== "up" ? (
               <>
                 <div className="item" onClick={() => handleVote("up")}>
                   <ThumbUpIcon style={{ color: "green" }} />
-                  {data?.upvotes}
+                  {data?.data?.upvote}
                 </div>
                 <div className="item" onClick={() => handleVote("down")}>
                   <ThumbDownOutlinedIcon />
-                  {data?.downvotes}
+                  {data?.data?.downvote}
                 </div>
               </>
-          ): data?.user_vote === "down" ? (
+          ): data?.data?.user_vote === "down" ? (
               <>
                 <div className="item" onClick={() => handleVote("up")}>
                   <ThumbUpOutlinedIcon />
-                  {data?.upvotes}
+                  {data?.data?.upvote}
                 </div>
                 <div className="item" onClick={() => handleVote("down")}>
                   <ThumbDownIcon style={{ color: "red" }} />
-                  {data?.downvotes}
+                  {data?.data?.downvote}
                 </div>
               </>
           ) : (
               <>
                 <div className="item" onClick={() => handleVote("up")}>
                   <ThumbUpOutlinedIcon />
-                  {data?.upvotes}
+                  {data?.upvote}
                 </div>
                 <div className="item" onClick={() => handleVote("down")}>
                   <ThumbDownOutlinedIcon />
-                  {data?.downvotes}
+                  {data?.downvote}
                 </div>
               </>
             )}
