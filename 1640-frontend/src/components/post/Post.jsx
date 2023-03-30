@@ -47,7 +47,7 @@ const Post = ({ post }) => {
   // );
   const deleteMutation = useMutation(
     (postData) => {
-      return makeRequest.delete("idea/delete", { postData });
+      return makeRequest.delete("idea/delete", {data: postData });
     },
     {
       onSuccess: () => {
@@ -84,6 +84,7 @@ const Post = ({ post }) => {
   };
 
   const handleDelete = () => {
+    console.log(post?.id);
     deleteMutation.mutate({ id: post?.id });
   };
 
