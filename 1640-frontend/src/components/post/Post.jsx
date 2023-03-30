@@ -1,20 +1,20 @@
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { Button } from "@mui/material";
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import "./post.scss";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -23,19 +23,19 @@ const Post = ({ post }) => {
   const { currentUser } = useContext(AuthContext);
 
   const { isLoading, data } = useQuery(["vote", post.id], () =>
-      makeRequest
-          .post("vote/get", {
-            user_id: currentUser.data.user.id,
-            idea_id: post.id,
-          })
-          .then((res) => res.data)
+    makeRequest
+      .post("vote/get", {
+        user_id: currentUser.data.user.id,
+        idea_id: post.id,
+      })
+      .then((res) => res.data)
   );
 
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation(
     (postData) => {
-      return makeRequest.delete("idea/delete", {data: postData });
+      return makeRequest.delete("idea/delete", { data: postData });
     },
     {
       onSuccess: () => {
@@ -46,15 +46,15 @@ const Post = ({ post }) => {
   );
 
   const voteMutation = useMutation(
-      (voteData) => {
-        return makeRequest.post("vote/handle", voteData);
+    (voteData) => {
+      return makeRequest.post("vote/handle", voteData);
+    },
+    {
+      onSuccess: () => {
+        // Invalidate and refetch
+        queryClient.invalidateQueries(["vote", post.id]);
       },
-      {
-        onSuccess: () => {
-          // Invalidate and refetch
-          queryClient.invalidateQueries(["vote", post.id]);
-        },
-      }
+    }
   );
 
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -73,8 +73,14 @@ const Post = ({ post }) => {
   };
 
   const handleVote = (vote) => {
-    voteMutation.mutate({user_id: currentUser?.data?.user?.id, idea_id: post?.id, vote: vote});
+    voteMutation.mutate({
+      user_id: currentUser?.data?.user?.id,
+      idea_id: post?.id,
+      vote: vote,
+    });
   };
+
+  const [underline, setUnderline] = useState(false);
 
   const showDeleteButton = post.userId === currentUser.id;
 
@@ -84,26 +90,33 @@ const Post = ({ post }) => {
         <div className="user">
           <div className="userInfo">
             {post?.is_anonymous ? (
-                <>
-                  <img src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/anonymous-512.png" alt="avatar" />
-                  <div className="details">
-                      <span className="name">Anonymous</span>
-                    <span className="date">{moment(post?.created_at).fromNow()}</span>
-                  </div>
-                </>
+              <>
+                <img
+                  src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/anonymous-512.png"
+                  alt="avatar"
+                />
+                <div className="details">
+                  <span className="name">Anonymous</span>
+                  <span className="date">
+                    {moment(post?.created_at).fromNow()}
+                  </span>
+                </div>
+              </>
             ) : (
-                <>
-                  <img src={post?.avatar} alt="avatar" />
-                  <div className="details">
-                    <Link
-                        to={`/profile/${post?.user_id}`}
-                        style={{ textDecoration: "none", color: "inherit" }}
-                    >
-                      <span className="name">{post?.username}</span>
-                    </Link>
-                    <span className="date">{moment(post?.created_at).fromNow()}</span>
-                  </div>
-                </>
+              <>
+                <img src={post?.avatar} alt="avatar" />
+                <div className="details">
+                  <Link
+                    to={`/profile/${post?.user_id}`}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <span className="name">{post?.username}</span>
+                  </Link>
+                  <span className="date">
+                    {moment(post?.created_at).fromNow()}
+                  </span>
+                </div>
+              </>
             )}
           </div>
           <div>
@@ -126,64 +139,74 @@ const Post = ({ post }) => {
         </div>
         <div className="content">
           <p>{post?.content}</p>
-          {post.image_array && post.image_array.map((imageUrl, index) => (
+          {post.image_array &&
+            post.image_array.map((imageUrl, index) => (
               <img src={imageUrl} alt={`Image ${index}`} />
-          ))}
+            ))}
         </div>
         <div className="info">
           {isLoading ? (
-              "loading"
+            "loading"
           ) : data?.data?.user_vote === "" ? (
-              <>
-                <div className="item" onClick={() => handleVote("up")}>
-                  <ThumbUpOutlinedIcon />
-                  {data?.data?.upvote}
-                </div>
-                <div className="item" onClick={() => handleVote("down")}>
-                  <ThumbDownOutlinedIcon />
-                  {data?.data?.downvote}
-                </div>
-              </>
-          ) : data?.data?.user_vote=== "up" ? (
-              <>
-                <div className="item" onClick={() => handleVote("up")}>
-                  <ThumbUpIcon style={{ color: "green" }} />
-                  {data?.data?.upvote}
-                </div>
-                <div className="item" onClick={() => handleVote("down")}>
-                  <ThumbDownOutlinedIcon />
-                  {data?.data?.downvote}
-                </div>
-              </>
-          ): data?.data?.user_vote === "down" ? (
-              <>
-                <div className="item" onClick={() => handleVote("up")}>
-                  <ThumbUpOutlinedIcon />
-                  {data?.data?.upvote}
-                </div>
-                <div className="item" onClick={() => handleVote("down")}>
-                  <ThumbDownIcon style={{ color: "red" }} />
-                  {data?.data?.downvote}
-                </div>
-              </>
+            <>
+              <div className="item" onClick={() => handleVote("up")}>
+                <ThumbUpOutlinedIcon />
+                {data?.data?.upvote}
+              </div>
+              <div className="item" onClick={() => handleVote("down")}>
+                <ThumbDownOutlinedIcon />
+                {data?.data?.downvote}
+              </div>
+            </>
+          ) : data?.data?.user_vote === "up" ? (
+            <>
+              <div className="item" onClick={() => handleVote("up")}>
+                <ThumbUpIcon style={{ color: "green" }} />
+                {data?.data?.upvote}
+              </div>
+              <div className="item" onClick={() => handleVote("down")}>
+                <ThumbDownOutlinedIcon />
+                {data?.data?.downvote}
+              </div>
+            </>
+          ) : data?.data?.user_vote === "down" ? (
+            <>
+              <div className="item" onClick={() => handleVote("up")}>
+                <ThumbUpOutlinedIcon />
+                {data?.data?.upvote}
+              </div>
+              <div className="item" onClick={() => handleVote("down")}>
+                <ThumbDownIcon style={{ color: "red" }} />
+                {data?.data?.downvote}
+              </div>
+            </>
           ) : (
-              <>
-                <div className="item" onClick={() => handleVote("up")}>
-                  <ThumbUpOutlinedIcon />
-                  {data?.upvote}
-                </div>
-                <div className="item" onClick={() => handleVote("down")}>
-                  <ThumbDownOutlinedIcon />
-                  {data?.downvote}
-                </div>
-              </>
-            )}
+            <>
+              <div className="item" onClick={() => handleVote("up")}>
+                <ThumbUpOutlinedIcon />
+                {data?.upvote}
+              </div>
+              <div className="item" onClick={() => handleVote("down")}>
+                <ThumbDownOutlinedIcon />
+                {data?.downvote}
+              </div>
+            </>
+          )}
 
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
             Comments
           </div>
 
+          <div
+            className="view"
+            onMouseOver={() => setUnderline(true)}
+            onMouseOut={() => setUnderline(false)}
+          >
+            <span style={{ textDecoration: underline ? "underline" : "none" }}>
+              100 Views
+            </span>
+          </div>
           <div className="download">
             <Button>Download</Button>
           </div>
