@@ -4,7 +4,7 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { Button } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import moment from "moment";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
@@ -22,11 +22,14 @@ const Post = ({ post }) => {
 
   const { currentUser } = useContext(AuthContext);
 
-  // const { isLoading, error, data } = useQuery(["likes", post.id], () =>
-  //     makeRequest.get("/likes?postId=" + post.id).then((res) => {
-  //         return res.data;
-  //     })
-  // );
+  const { isLoading, data } = useQuery(["vote", post.id], () =>
+      makeRequest
+          .post("vote/get", {
+            user_id: currentUser.data.user.id,
+            idea_id: post.id,
+          })
+          .then((res) => res.data)
+  );
 
   const queryClient = useQueryClient();
 
@@ -54,6 +57,18 @@ const Post = ({ post }) => {
     }
   );
 
+  const voteMutation = useMutation(
+      (voteData) => {
+        return makeRequest.post("vote/handle", { data: voteData });
+      },
+      {
+        onSuccess: () => {
+          // Invalidate and refetch
+          queryClient.invalidateQueries(["posts"]);
+        },
+      }
+  );
+
   // const handleLike = () => {
   //     mutation.mutate(data.includes(currentUser.id));
   // };
@@ -69,8 +84,11 @@ const Post = ({ post }) => {
   };
 
   const handleDelete = () => {
-    console.log(post?.id);
     deleteMutation.mutate({ id: post?.id });
+  };
+
+  const handleVote = (vote) => {
+    voteMutation.mutate({user_id: currentUser?.data?.user?.id, idea_id: post?.id, vote: vote});
   };
 
   const showDeleteButton = post.userId === currentUser.id;
@@ -128,38 +146,54 @@ const Post = ({ post }) => {
           ))}
         </div>
         <div className="info">
-          <div className="item">
-            {/*{isLoading ? (*/}
-            {/*    "loading"*/}
-            {/*) : data.includes(currentUser.id) ? (*/}
-            {/*    <FavoriteOutlinedIcon*/}
-            {/*        style={{ color: "red" }}*/}
-            {/*        onClick={handleLike}*/}
-            {/*    />*/}
-            {/*) : (*/}
-            {/*    <FavoriteBorderOutlinedIcon onClick={handleLike} />*/}
-            {/*)}*/}
-            {/*{data?.length} Likes*/}
-            <ThumbUpIcon style={{ color: "green" }} />
-            <ThumbUpOutlinedIcon />
-            Upvote
-          </div>
-          <div className="item">
-            {/*{isLoading ? (*/}
-            {/*    "loading"*/}
-            {/*) : data.includes(currentUser.id) ? (*/}
-            {/*    <FavoriteOutlinedIcon*/}
-            {/*        style={{ color: "red" }}*/}
-            {/*        onClick={handleLike}*/}
-            {/*    />*/}
-            {/*) : (*/}
-            {/*    <FavoriteBorderOutlinedIcon onClick={handleLike} />*/}
-            {/*)}*/}
-            {/*{data?.length} Likes*/}
-            <ThumbDownIcon style={{ color: "red" }} />
-            <ThumbDownOutlinedIcon />
-            Downvote
-          </div>
+          {isLoading ? (
+              "loading"
+          ) : data?.user_vote === "" ? (
+              <>
+                <div className="item" onClick={() => handleVote("up")}>
+                  <ThumbUpOutlinedIcon />
+                  {data?.upvotes}
+                </div>
+                <div className="item" onClick={() => handleVote("down")}>
+                  <ThumbDownOutlinedIcon />
+                  {data?.downvotes}
+                </div>
+              </>
+          ) : data?.user_vote === "up" ? (
+              <>
+                <div className="item" onClick={() => handleVote("up")}>
+                  <ThumbUpIcon style={{ color: "green" }} />
+                  {data?.upvotes}
+                </div>
+                <div className="item" onClick={() => handleVote("down")}>
+                  <ThumbDownOutlinedIcon />
+                  {data?.downvotes}
+                </div>
+              </>
+          ): data?.user_vote === "down" ? (
+              <>
+                <div className="item" onClick={() => handleVote("up")}>
+                  <ThumbUpOutlinedIcon />
+                  {data?.upvotes}
+                </div>
+                <div className="item" onClick={() => handleVote("down")}>
+                  <ThumbDownIcon style={{ color: "red" }} />
+                  {data?.downvotes}
+                </div>
+              </>
+          ) : (
+              <>
+                <div className="item" onClick={() => handleVote("up")}>
+                  <ThumbUpOutlinedIcon />
+                  {data?.upvotes}
+                </div>
+                <div className="item" onClick={() => handleVote("down")}>
+                  <ThumbDownOutlinedIcon />
+                  {data?.downvotes}
+                </div>
+              </>
+            )}
+
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
             Comments
