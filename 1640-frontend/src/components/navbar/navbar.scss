@@ -2,6 +2,7 @@
 
 .navbar {
   @include themify($themes) {
+    width: 97%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -32,6 +33,7 @@
         border: 1px solid themed("border");
         border-radius: 5px;
         padding: 5px;
+        margin-left: 35%;
 
         input {
           border: none;
@@ -56,7 +58,8 @@
       gap: 20px;
 
       @include mobile {
-        display: none;
+        display: flex;
+        margin-left: 20px;
       }
 
       .user {
@@ -65,18 +68,11 @@
         gap: 10px;
         font-weight: 500;
 
-        @include tablet {
-          display: none;
-        }
-
         img {
           width: 30px;
           height: 30px;
           border-radius: 50%;
           object-fit: cover;
-        }
-
-        span {
         }
       }
     }
