@@ -110,14 +110,14 @@ const CreatePost = () => {
                 src={URL.createObjectURL(file)}
               />
             ))}
-            {files.map((file, index) => (
-              <HighlightOffIcon
-                id="deleteIcon"
-                onClick={() => {
-                  document.getElementById("file").remove();
-                }}
-              />
-            ))}
+            {files.length > 0 &&
+                <HighlightOffIcon
+                    id="deleteIcon"
+                    onClick={() => {
+                      setFiles([]);
+                    }}
+                />
+            }
           </div>
         </div>
         <hr />
