@@ -4,21 +4,25 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
-import { useContext, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { Link } from "react-router-dom";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import "./post.scss";
 
+
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const viewCount = post?.view_count || 0;
+  const roundedViewCount = Math.floor(viewCount / 2);
 
   const { currentUser } = useContext(AuthContext);
 
@@ -56,6 +60,22 @@ const Post = ({ post }) => {
       },
     }
   );
+
+  const viewMutation = useMutation(
+      () => {
+        return makeRequest.patch("idea/view", { idea_id: post?.id });
+      },
+      {
+        onSuccess: () => {
+          // Invalidate and refetch
+          queryClient.invalidateQueries(["posts"]);
+        },
+      }
+  );
+
+  useEffect(() => {
+    viewMutation.mutate();
+  }, []);
 
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
 
@@ -204,7 +224,7 @@ const Post = ({ post }) => {
             onMouseOut={() => setUnderline(false)}
           >
             <span style={{ textDecoration: underline ? "underline" : "none" }}>
-              100 Views
+              {roundedViewCount} Views
             </span>
           </div>
           <div className="download">
