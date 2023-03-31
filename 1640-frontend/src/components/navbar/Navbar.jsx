@@ -50,7 +50,7 @@ const Navbar = () => {
             </div>
             <div className="right">
                 <Link to={`/profile/${userId}`} className="user">
-                    <PersonOutlinedIcon />
+                    <img src={currentUser?.data?.user?.avatar} alt="" />
                 </Link>
                 <LogoutIcon onClick={handleClick} />
             </div>
