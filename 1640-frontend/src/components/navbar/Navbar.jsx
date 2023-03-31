@@ -38,25 +38,19 @@ const Navbar = () => {
                 <Link to="/" style={{ textDecoration: "none" }}>
                     <span>1640 Web Enterprise</span>
                 </Link>
-                <HomeOutlinedIcon />
                 {darkMode ? (
                     <WbSunnyOutlinedIcon onClick={toggle} />
                 ) : (
                     <DarkModeOutlinedIcon onClick={toggle} />
                 )}
-                <GridViewOutlinedIcon />
                 <div className="search">
                     <SearchOutlinedIcon />
                     <input type="text" placeholder="Search..." />
                 </div>
             </div>
             <div className="right">
-                <PersonOutlinedIcon />
-                <EmailOutlinedIcon />
-                <NotificationsOutlinedIcon />
                 <Link to={`/profile/${userId}`} className="user">
-                    <img src={currentUser?.data?.user?.avatar} alt="" />
-                    <span>{currentUser?.data?.user?.username}</span>
+                    <PersonOutlinedIcon />
                 </Link>
                 <LogoutIcon onClick={handleClick} />
             </div>
