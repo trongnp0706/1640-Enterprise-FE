@@ -1,7 +1,5 @@
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
@@ -33,12 +31,11 @@ const Navbar = () => {
         <Link to="/" style={{ textDecoration: "none" }}>
           <span>1640 Web Enterprise</span>
         </Link>
-        <div className="search">
-          <SearchOutlinedIcon />
-          <input type="text" placeholder="Search..." />
-        </div>
       </div>
-
+      <div className="search">
+        <SearchOutlinedIcon />
+        <input type="text" placeholder="Search..." />
+      </div>
       <div className="right">
         <Link to={`/profile/${userId}`} className="user">
           <img src={currentUser?.data?.user?.avatar} alt="" />

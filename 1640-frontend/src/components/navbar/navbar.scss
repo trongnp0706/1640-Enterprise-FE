@@ -25,29 +25,29 @@
         font-size: 20px;
         color: themed("logo");
       }
+    }
 
-      .search {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        border: 1px solid themed("border");
-        border-radius: 5px;
-        padding: 5px;
-        margin-left: 35%;
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid themed("border");
+      border-radius: 5px;
+      padding: 5px;
+      margin-right: 15%;
 
-        input {
-          border: none;
-          width: 500px;
-          background-color: transparent;
-          color: themed("textColor");
+      input {
+        border: none;
+        width: 500px;
+        background-color: transparent;
+        color: themed("textColor");
 
-          @include mobile {
-            display: none;
-          }
+        @include mobile {
+          display: none;
+        }
 
-          @include tablet {
-            width: 200px;
-          }
+        @include tablet {
+          width: 200px;
         }
       }
     }
