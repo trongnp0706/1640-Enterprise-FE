@@ -5,7 +5,7 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { Button } from "@mui/material";
+import {Button, List} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,6 +16,9 @@ import { Link } from "react-router-dom";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import "./post.scss";
+import Comments from "../comments/Comments";
+import CommentItem from "../comments/components/CommentItem";
+import axios from "axios";
 
 
 const Post = ({ post }) => {
@@ -103,6 +106,26 @@ const Post = ({ post }) => {
   const [underline, setUnderline] = useState(false);
 
   const showDeleteButton = post.userId === currentUser.id;
+
+  const [dataComments, setDataComments] = useState([]);
+  useEffect(() => {
+    const fetchComments = async () =>
+        await axios
+            .get("https://jsonplaceholder.typicode.com/posts/1/comments") //Change api of project
+            .then((res) => {
+              return setDataComments(res.data);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+    fetchComments();
+  }, []);
+
+  const renderComments = () => {
+    return dataComments.map((item, index) => {
+      return <CommentItem key={index} item={item} />;
+    });
+  };
 
   return (
     <div className="post">
@@ -231,6 +254,13 @@ const Post = ({ post }) => {
             <Button>Download</Button>
           </div>
         </div>
+        <hr />
+        {!!dataComments.length ? (
+            <List>{renderComments()}</List>
+        ) : (
+            <h4>Loading....</h4>
+        )}
+        <Comments idPost={1} />
       </div>
     </div>
   );
