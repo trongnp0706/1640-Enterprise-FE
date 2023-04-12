@@ -2,7 +2,7 @@
 
 .navbar {
   @include themify($themes) {
-    width: 97%;
+    // width: 97%;
     display: flex;
     align-items: center;
     justify-content: space-between;
