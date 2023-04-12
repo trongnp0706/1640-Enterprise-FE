@@ -254,13 +254,7 @@ const Post = ({ post }) => {
             <Button>Download</Button>
           </div>
         </div>
-        <hr />
-        {!!dataComments.length ? (
-            <List>{renderComments()}</List>
-        ) : (
-            <h4>Loading....</h4>
-        )}
-        <Comments idPost={1} />
+        {commentOpen && <Comments postId={post.id} />}
       </div>
     </div>
   );
