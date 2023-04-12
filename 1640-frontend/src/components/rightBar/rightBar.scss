@@ -30,6 +30,7 @@
         padding: 20px;
         margin-bottom: 20px;
         background-color: themed("bg");
+        border-radius: 10px;
 
         span {
           color: gray;
@@ -42,47 +43,18 @@
           background-color: themed("border");
         }
 
-        .user {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin: 20px 0px;
+        table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        td {
+          padding: 10px;
+          font-family: Arial, sans-serif;
+          font-size: 13px;
+          color: #333;
 
-          .userInfo {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            position: relative;
-
-            p {
-              color: themed("textColorSoft");
-            }
-
-            span {
-              font-weight: 500;
-              color: themed("textColor");
-            }
-          }
-
-          .buttons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            button {
-              border: none;
-              padding: 5px;
-              color: white;
-              cursor: pointer;
-
-              &:first-child {
-                background-color: #5271ff;
-              }
-
-              &:last-child {
-                background-color: #f0544f;
-              }
-            }
+          &:hover {
+            text-decoration: underline;
           }
         }
       }
