@@ -3,7 +3,7 @@ import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import moment from "moment";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import "./comments.scss";
@@ -44,6 +44,11 @@ const Comments = ({ postId }) => {
     setDesc("");
   };
 
+  const handleAnonymous = () => {
+    setAnonymous((prev) => !prev);
+  };
+
+
   return (
     <div className="comments">
       <hr />
@@ -55,11 +60,19 @@ const Comments = ({ postId }) => {
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
         />
-        <ToggleOffOutlinedIcon style={{ fontSize: "30px" }} />
-        <ToggleOnIcon style={{ fontSize: "30px" }} />
+        {is_anonymous ? (
+            <>
+              <ToggleOnIcon style={{ fontSize: "30px" }} onClick={handleAnonymous} />
+              <span>Anonymous</span>
+            </>
+        ) : (
+            <>
+              <ToggleOffOutlinedIcon style={{ fontSize: "30px" }} onClick={handleAnonymous} />
+              <span>Anonymous</span>
+            </>
+        )}
         <button onClick={handleClick}>Send</button>
       </div>
-      <hr />
       {error
         ? "Something went wrong"
         : isLoading
@@ -67,14 +80,29 @@ const Comments = ({ postId }) => {
         : data && data.data
         ? data.data.map((comment) => (
             <div className="comment" key={comment.id}>
-              <img src={comment.avatar} alt="" />
-              <div className="info">
-                <span>{comment.username}</span>
-                <span className="date">
+              {comment.is_anonymous ? (
+                  <>
+                    <img src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/anonymous-512.png" alt="" />
+                    <div className="info">
+                      <span>Anonymous</span>
+                      <span className="date">
                   {moment(comment.createdAt).fromNow()}
                 </span>
-                <p>{comment.content}</p>
-              </div>
+                      <p>{comment.content}</p>
+                    </div>
+                  </>
+              ) : (
+                  <>
+                    <img src={comment.avatar} alt="" />
+                    <div className="info">
+                      <span>{comment.username}</span>
+                      <span className="date">
+                  {moment(comment.createdAt).fromNow()}
+                </span>
+                      <p>{comment.content}</p>
+                    </div>
+                  </>
+              )}
               <MoreHorizIcon
                 style={{
                   alignSelf: "center",

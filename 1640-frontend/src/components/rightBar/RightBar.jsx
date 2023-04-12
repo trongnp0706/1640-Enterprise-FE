@@ -1,14 +1,31 @@
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import "./rightBar.scss";
+import React, {useContext, useState} from "react";
+import {TermContext} from "../../context/termContext";
 
 const RightBar = () => {
+
+  const { termConfirm, setTermConfirm } = useContext(TermContext);
+  const handleTermConfirm = () => {
+    setTermConfirm((prev) => !prev);
+  }
+
   return (
     <div className="rightBar">
       <div className="container">
         <div className="item">
-          <CheckBoxIcon></CheckBoxIcon>
-          <CheckBoxOutlineBlankIcon></CheckBoxOutlineBlankIcon>
+          <div className="checkbox" onClick={handleTermConfirm}>
+            {termConfirm ? (
+                <>
+                  <CheckBoxIcon/>
+                </>
+            ) : (
+                <>
+                  <CheckBoxOutlineBlankIcon/>
+                </>
+            )}
+          </div>
           <p>Terms & Conditions</p>
           <hr />
           <div className="user">
