@@ -112,6 +112,7 @@ const Comments = ({ postId }) => {
                   <img
                     src="https://cdn2.iconfinder.com/data/icons/social-flat-buttons-3/512/anonymous-512.png"
                     alt=""
+                    style={{ marginLeft: "10px", marginTop: "10px" }}
                   />
                   <div className="info">
                     <span>Anonymous</span>
