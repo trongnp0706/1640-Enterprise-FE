@@ -17,7 +17,6 @@ import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 import "./post.scss";
 import Comments from "../comments/Comments";
-import CommentItem from "../comments/components/CommentItem";
 import axios from "axios";
 
 
@@ -120,12 +119,6 @@ const Post = ({ post }) => {
             });
     fetchComments();
   }, []);
-
-  const renderComments = () => {
-    return dataComments.map((item, index) => {
-      return <CommentItem key={index} item={item} />;
-    });
-  };
 
   return (
     <div className="post">

@@ -52,18 +52,18 @@ const Comments = ({ postId }) => {
                 ? "Something went wrong"
                 : isLoading
                     ? "loading"
-                    : data.data.map((comment) => (
-                        <div className="comment" key={comment.id}>
-                            <img src={comment.avatar} alt="" />
-                            <div className="info">
-                                <span>{comment.username}</span>
-                                <p>{comment.content}</p>
-                            </div>
-                            <span className="date">
-                {moment(comment.createdAt).fromNow()}
-              </span>
-                        </div>
-                    ))}
+                    : data && data.data ? (
+                data.data.map((comment) => (
+                <div className="comment" key={comment.id}>
+                <img src={comment.avatar} alt="" />
+                <div className="info">
+                <span>{comment.username}</span>
+                <p>{comment.content}</p>
+                </div>
+                <span className="date">{moment(comment.createdAt).fromNow()}</span>
+                </div>
+                ))
+                ) : null}
         </div>
     );
 };
