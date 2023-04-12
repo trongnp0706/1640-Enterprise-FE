@@ -1,6 +1,6 @@
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import { useContext } from "react";
+import {useContext, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -24,6 +24,16 @@ const Navbar = () => {
       console.log("Logout failed with error:" + err);
     }
   };
+
+  const getStorageChange = (e) => {
+    console.log(e.data)
+  }
+
+  useEffect(() => {
+    window.addEventListener('storage', getStorageChange)
+
+    return (window.removeEventListener ('storage', getStorageChange))
+  }, [])
 
   return (
     <div className="navbar">

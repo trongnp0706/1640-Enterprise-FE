@@ -16,7 +16,7 @@ export const AuthContextProvider = ({ children }) => {
         );
         setCurrentUser(res.data);
 
-        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("user", JSON.stringify(res.data.data.user));
     };
 
     const logout = async (inputs) => {
