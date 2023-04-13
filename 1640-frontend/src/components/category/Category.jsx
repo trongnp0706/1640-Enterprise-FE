@@ -1,7 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
-import "./manageItem.scss";
+import "./category.scss";
 
-const ManageItem = ({ category }) => {
+const Category = ({ category }) => {
   const queryClient = useQueryClient();
 
   // const deleteMutation = useMutation(
@@ -34,4 +34,4 @@ const ManageItem = ({ category }) => {
   );
 };
 
-export default ManageItem;
+export default Category;

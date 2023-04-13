@@ -13,7 +13,9 @@ import { AuthContext } from "./context/authContext";
 import { DarkModeContext } from "./context/darkModeContext";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import Manage from "./pages/manage/Manage";
+import CategoryPage from "./pages/category/CategoryPage";
+import DepartmentPage from "./pages/department/DepartmentPage";
+import YearPage from "./pages/year/YearPage";
 import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import "./style.scss";
@@ -70,7 +72,15 @@ function App() {
       children: [
         {
           path: "/manage",
-          element: <Manage />,
+          element: <CategoryPage />,
+        },
+        {
+          path: "/manage/department",
+          element: <DepartmentPage />,
+        },
+        {
+          path: "/manage/year",
+          element: <YearPage />,
         },
         {
           path: "/",
