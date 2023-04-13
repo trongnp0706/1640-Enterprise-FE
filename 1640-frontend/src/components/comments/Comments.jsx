@@ -58,7 +58,6 @@ const Comments = ({ postId }) => {
   };
 
   const handleDeleteButtonClick = () => {
-    // Implement delete functionality here
     setAnchorEl(null);
   };
 
