@@ -47,6 +47,16 @@ const Navbar = () => {
         <input type="text" placeholder="Search..." />
       </div>
       <div className="right">
+        { currentUser.data.user.role_ticker === "SAD" ? (
+            <>
+              <Link to={`/manage`}>
+                Manage
+              </Link>
+            </>
+        ) : (
+            <>
+            </>
+          )}
         <Link to={`/profile/${userId}`} className="user">
           <img src={currentUser?.data?.user?.avatar} alt="" />
         </Link>
