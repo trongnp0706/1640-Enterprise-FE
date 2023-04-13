@@ -3,7 +3,7 @@ import SendIcon from "@mui/icons-material/Send";
 import ToggleOffOutlinedIcon from "@mui/icons-material/ToggleOffOutlined";
 import ToggleOnIcon from "@mui/icons-material/ToggleOn";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Image from "../../assets/img.png";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
@@ -77,6 +77,16 @@ const CreatePost = () => {
   const handleAnonymous = () => {
     setAnonymous((prev) => !prev);
   };
+
+  const getStorageChange = (e) => {
+    console.log('chaange')
+  }
+
+  useEffect(() => {
+    window.addEventListener('storage', getStorageChange)
+
+    return (window.removeEventListener ('storage', getStorageChange))
+  }, [])
 
   return (
     <div className="share">

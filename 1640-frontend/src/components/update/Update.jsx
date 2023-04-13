@@ -39,13 +39,17 @@ const Update = ({ setOpenUpdate }) => {
   const navigate = useNavigate();
 
   const mutation = useMutation(
-      (user) => {
-        return makeRequest.patch("user/update", user);
+      async (user) => {
+        const result = await makeRequest.patch("user/update", user)
+        console.log(result)
+        window.localStorage.setItem('user', JSON.stringify(result.data))
+        return result;
       },
       {
         onSuccess: () => {
           // Invalidate and refetch
           queryClient.invalidateQueries(["user"]);
+
         },
       }
   );
@@ -56,6 +60,7 @@ const Update = ({ setOpenUpdate }) => {
     let avatarUrl;
     profileUrl = profile ? await upload(profile) : currentUser?.data?.user?.avatar;
     avatarUrl = profileUrl?.data;
+
     try {
       mutation.mutate({...inputs, avatar: avatarUrl})
     } catch (err) {
