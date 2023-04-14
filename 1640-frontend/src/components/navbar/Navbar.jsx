@@ -1,6 +1,7 @@
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import {useContext, useEffect} from "react";
+import { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 import { DarkModeContext } from "../../context/darkModeContext";
@@ -26,14 +27,14 @@ const Navbar = () => {
   };
 
   const getStorageChange = (e) => {
-    console.log(e.data)
-  }
+    console.log(e.data);
+  };
 
   useEffect(() => {
-    window.addEventListener('storage', getStorageChange)
+    window.addEventListener("storage", getStorageChange);
 
-    return (window.removeEventListener ('storage', getStorageChange))
-  }, [])
+    return window.removeEventListener("storage", getStorageChange);
+  }, []);
 
   return (
     <div className="navbar">
@@ -47,16 +48,22 @@ const Navbar = () => {
         <input type="text" placeholder="Search..." />
       </div>
       <div className="right">
-        { currentUser.data.user.role_ticker === "SAD" ? (
-            <>
-              <Link to={`/manage`}>
-                Manage
-              </Link>
-            </>
+        {currentUser.data.user.role_ticker === "SAD" ? (
+          <>
+            <Link to={`/manage`}>
+              <FolderSharedIcon
+                style={{
+                  textDecoration: "none",
+                  width: "100%",
+                  height: "40px",
+                  color: "inherit",
+                }}
+              />
+            </Link>
+          </>
         ) : (
-            <>
-            </>
-          )}
+          <></>
+        )}
         <Link to={`/profile/${userId}`} className="user">
           <img src={currentUser?.data?.user?.avatar} alt="" />
         </Link>
