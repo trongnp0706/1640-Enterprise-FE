@@ -12,6 +12,8 @@ import RightBar from "./components/rightBar/RightBar";
 import { AuthContext } from "./context/authContext";
 import { DarkModeContext } from "./context/darkModeContext";
 import Home from "./pages/home/Home";
+import Popular from "./pages/home/Popular";
+import MostViewed from "./pages/home/MostViewed";
 import Login from "./pages/login/Login";
 import CategoryPage from "./pages/category/CategoryPage";
 import DepartmentPage from "./pages/department/DepartmentPage";
@@ -85,6 +87,14 @@ function App() {
         {
           path: "/",
           element: <Home />,
+        },
+        {
+          path: "/popular",
+          element: <Popular />,
+        },
+        {
+          path: "/view",
+          element: <MostViewed />,
         },
         {
           path: "/profile/:id",

@@ -14,6 +14,7 @@ import Courses from "../../assets/12.png";
 import Fund from "../../assets/13.png";
 import { AuthContext } from "../../context/authContext";
 import { useContext } from "react";
+import {Link} from "react-router-dom";
 
 const LeftBar = () => {
 
@@ -31,15 +32,21 @@ const LeftBar = () => {
                         <span>{currentUser?.data?.user?.username}</span>
                     </div>
                     <hr />
-                    <div className="item">
-                        <span>Latest Posts</span>
-                    </div>
+                    <Link to={`/`}>
+                        <div className="item">
+                            <span>Latest Posts</span>
+                        </div>
+                    </Link>
+                    <Link to={`/popular`}>
                     <div className="item">
                         <span>Most Popular Posts</span>
                     </div>
+                    </Link>
+                    <Link to={`/view`}>
                     <div className="item">
                         <span>Most Viewed Post</span>
                     </div>
+                    </Link>
                     <div className="item">
                         <span>Statistics</span>
                     </div>
