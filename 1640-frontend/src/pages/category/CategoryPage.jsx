@@ -73,7 +73,7 @@ const CategoryPage = () => {
             "& .MuiMenuItem-root": {
               margin: "5px",
               width: "300px",
-              height: "50px",
+              height: "100px",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -81,38 +81,39 @@ const CategoryPage = () => {
             },
           }}
         >
-          <MenuItem
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <label style={{ fontWeight: "bold", marginRight: "5px" }}>
+          <div>
+            <label style={{ fontWeight: "bold", margin: "10px" }}>
               Label 1
             </label>
             <input
               type="text"
-              style={{ width: "70%", height: "70%", borderRadius: "10px" }}
+              style={{
+                width: "85%",
+                height: "70%",
+                borderRadius: "10px",
+                margin: "10px",
+                padding: "10px",
+              }}
             />
-          </MenuItem>
+          </div>
 
-          <MenuItem
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <label style={{ fontWeight: "bold", marginRight: "5px" }}>
+          <div>
+            <label style={{ fontWeight: "bold", margin: "10px" }}>
               Label 2
             </label>
             <input
               type="text"
-              style={{ width: "70%", height: "70%", borderRadius: "10px" }}
+              style={{
+                width: "85%",
+                height: "70%",
+                borderRadius: "10px",
+                margin: "10px",
+                padding: "10px",
+              }}
             />
-          </MenuItem>
-          <MenuItem>
+          </div>
+
+          <div style={{ height: "40px" }}>
             <button
               style={{
                 width: "50%",
@@ -121,13 +122,15 @@ const CategoryPage = () => {
                 backgroundColor: "black",
                 borderRadius: "10px",
                 color: "white",
-                marginLeft:"27%"
+                marginLeft: "27%",
               }}
+              onClick={handleAddClose}
             >
               Add
             </button>
-          </MenuItem>
+          </div>
         </Menu>
+
         <button className="delete" onClick={handleDeleteClick}>
           Delete
         </button>
@@ -157,7 +160,8 @@ const CategoryPage = () => {
               You want to delete?
             </span>
           </MenuItem>
-          <MenuItem>
+          {/* <MenuItem> */}
+          <div style={{ height: "40px" }}>
             <button
               style={{
                 width: "40%",
@@ -165,13 +169,15 @@ const CategoryPage = () => {
                 backgroundColor: "white",
                 borderRadius: "10px",
                 color: "black",
+                marginLeft: "7%",
               }}
+              onClick={handleDeleteClose}
             >
               Yes
             </button>
             <button
               style={{
-                marginLeft: "10px",
+                marginLeft: "3%",
                 width: "40%",
                 height: "100%",
                 backgroundColor: "black",
@@ -179,10 +185,11 @@ const CategoryPage = () => {
                 borderRadius: "10px",
                 color: "white",
               }}
+              onClick={handleDeleteClose}
             >
               No
             </button>
-          </MenuItem>
+          </div>
         </Menu>
       </div>
     </div>
