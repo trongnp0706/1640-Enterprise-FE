@@ -3,9 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
 const Departments = () => {
-    const { isLoading, error, data } = useQuery(["year"], () =>
+    const { isLoading, error, data } = useQuery(["years"], () =>
         makeRequest.get("year/all").then((res) => {
-            console.log(res?.data?.data)
             return res?.data?.data;
         })
     );

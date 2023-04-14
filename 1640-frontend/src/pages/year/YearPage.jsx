@@ -1,36 +1,68 @@
 import Menu from "@mui/material/Menu";
-import { useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Years from "../../components/years/Years";
 import "./yearPage.scss";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {makeRequest} from "../../axios";
 
 const YearPage = () => {
   const queryClient = useQueryClient();
+    const [year, setYear] = useState("");
+    const [closure_date, setClosureDate] = useState("");
+    const [date, setDate] = useState(new Date());
   const [showMenuAdd, setShowMenuAdd] = useState(false);
-  const [showMenuDelete, setShowMenuDelete] = useState(false);
   const [addAnchorEl, setAddAnchorEl] = useState(null);
-  const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
 
-  const handleAddClick = (event) => {
+    const handleDateChange = (date) => {
+        setDate(date);
+        const parsedDate = date;
+
+        const year = parsedDate.getFullYear();
+        const month = String(parsedDate.getMonth() + 1).padStart(2, '0');
+        const day = String(parsedDate.getDate()).padStart(2, '0');
+        const hours = String(parsedDate.getHours()).padStart(2, '0');
+        const minutes = String(parsedDate.getMinutes()).padStart(2, '0');
+        const seconds = String(parsedDate.getSeconds()).padStart(2, '0');
+
+        const isoDateString = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
+
+        setClosureDate(isoDateString);
+    };
+
+    const mutation = useMutation(
+        (newYear) => {
+            return makeRequest.post("year/add", newYear);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(["years"]);
+            },
+        }
+    );
+
+    const handleAddClick = (event) => {
     setAddAnchorEl(event.currentTarget);
     setShowMenuAdd(true);
   };
 
-  const handleDeleteClick = (event) => {
-    setDeleteAnchorEl(event.currentTarget);
-    setShowMenuDelete(true);
-  };
 
   const handleAddClose = () => {
     setAddAnchorEl(null);
     setShowMenuAdd(false);
+      mutation.mutate({academic_year: year, closure_date: closure_date})
+      setYear("");
+      setDate("");
   };
 
-  const handleDeleteClose = () => {
-    setDeleteAnchorEl(null);
-    setShowMenuDelete(false);
+  const handleAddCloseMenu = () => {
+    setAddAnchorEl(null);
+    setShowMenuAdd(false);
   };
+
   return (
     <div className="container">
       <div className="Sidebar">
@@ -67,7 +99,7 @@ const YearPage = () => {
           anchorEl={addAnchorEl}
           keepMounted
           open={showMenuAdd}
-          onClose={handleAddClose}
+          onClose={handleAddCloseMenu}
           sx={{
             "& .MuiMenuItem-root": {
               margin: "5px",
@@ -82,10 +114,12 @@ const YearPage = () => {
         >
           <div>
             <label style={{ fontWeight: "bold", margin: "10px" }}>
-              Label 1
+              Year
             </label>
             <input
               type="text"
+              onChange={(e) => setYear(e.target.value)}
+              value={year}
               style={{
                 width: "85%",
                 height: "70%",
@@ -98,18 +132,16 @@ const YearPage = () => {
 
           <div>
             <label style={{ fontWeight: "bold", margin: "10px" }}>
-              Label 2
+              Closure Date
             </label>
-            <input
-              type="text"
-              style={{
-                width: "85%",
-                height: "70%",
-                borderRadius: "10px",
-                margin: "10px",
-                padding: "10px",
-              }}
-            />
+              <DatePicker
+                  selected={date}
+                  onChange={handleDateChange}
+                  showTimeSelect
+                  timeFormat="HH:mm"
+                  timeIntervals={15}
+                  dateFormat="yyyy-MM-dd HH:mm"
+              />
           </div>
 
           <div style={{ height: "40px" }}>

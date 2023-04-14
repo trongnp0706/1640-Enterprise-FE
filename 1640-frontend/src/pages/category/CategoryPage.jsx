@@ -12,18 +12,11 @@ const CategoryPage = () => {
   const [ticker, setTicker] = useState("");
   const [category, setCategory] = useState("");
   const [showMenuAdd, setShowMenuAdd] = useState(false);
-  const [showMenuDelete, setShowMenuDelete] = useState(false);
   const [addAnchorEl, setAddAnchorEl] = useState(null);
-  const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
 
   const handleAddClick = (event) => {
     setAddAnchorEl(event.currentTarget);
     setShowMenuAdd(true);
-  };
-
-  const handleDeleteClick = (event) => {
-    setDeleteAnchorEl(event.currentTarget);
-    setShowMenuDelete(true);
   };
 
     const mutation = useMutation(
@@ -53,10 +46,6 @@ const CategoryPage = () => {
         setCategory("");
     };
 
-  const handleDeleteClose = () => {
-    setDeleteAnchorEl(null);
-    setShowMenuDelete(false);
-  };
   return (
     <div className="container">
       <div className="Sidebar">
@@ -156,67 +145,6 @@ const CategoryPage = () => {
               onClick={handleAddClose}
             >
               Add
-            </button>
-          </div>
-        </Menu>
-
-        <button className="delete" onClick={handleDeleteClick}>
-          Delete
-        </button>
-        <Menu
-          anchorEl={deleteAnchorEl}
-          keepMounted
-          open={showMenuDelete}
-          onClose={handleDeleteClose}
-          sx={{
-            "& .MuiMenuItem-root": {
-              margin: "5px",
-              width: "250px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              textAlign: "center",
-            },
-          }}
-        >
-          <MenuItem>
-            <span
-              style={{
-                fontWeight: "bold",
-              }}
-            >
-              You want to delete?
-            </span>
-          </MenuItem>
-          {/* <MenuItem> */}
-          <div style={{ height: "40px" }}>
-            <button
-              style={{
-                width: "40%",
-                height: "100%",
-                backgroundColor: "white",
-                borderRadius: "10px",
-                color: "black",
-                marginLeft: "7%",
-              }}
-              onClick={handleDeleteClose}
-            >
-              Yes
-            </button>
-            <button
-              style={{
-                marginLeft: "3%",
-                width: "40%",
-                height: "100%",
-                backgroundColor: "black",
-                border: "none",
-                borderRadius: "10px",
-                color: "white",
-              }}
-              onClick={handleDeleteClose}
-            >
-              No
             </button>
           </div>
         </Menu>

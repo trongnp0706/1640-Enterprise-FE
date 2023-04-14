@@ -1,30 +1,26 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import moment from "moment/moment";
 import React, { useState } from "react";
 import "./year.scss";
+import {makeRequest} from "../../axios";
 
 const Year = ({ year }) => {
   const queryClient = useQueryClient();
 
-  // const deleteMutation = useMutation(
-  //     (postData) => {
-  //         return makeRequest.delete("idea/delete", { data: postData });
-  //     },
-  //     {
-  //         onSuccess: () => {
-  //             // Invalidate and refetch
-  //             queryClient.invalidateQueries(["posts"]);
-  //         },
-  //     }
-  // );
-  //
-  // const handleDelete = () => {
-  //     console.log(post?.id);
-  //     deleteMutation.mutate({ id: post?.id });
-  // };
+    const deleteMutation = useMutation(
+        (yearData) => {
+            return makeRequest.delete("year/delete", { data: yearData });
+        },
+        {
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(["years"]);
+            },
+        }
+    );
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -33,6 +29,7 @@ const Year = ({ year }) => {
   };
 
   const handleDeleteButtonClick = () => {
+      deleteMutation.mutate({ academic_year: year?.academic_year });
     setAnchorEl(null);
   };
 

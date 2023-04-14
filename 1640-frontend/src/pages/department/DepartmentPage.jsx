@@ -9,21 +9,14 @@ import {makeRequest} from "../../axios";
 
 const DepartmentPage = () => {
   const queryClient = useQueryClient();
-    const [ticker, setTicker] = useState("");
-    const [department, setDepartment] = useState("");
+  const [ticker, setTicker] = useState("");
+  const [department, setDepartment] = useState("");
   const [showMenuAdd, setShowMenuAdd] = useState(false);
-  const [showMenuDelete, setShowMenuDelete] = useState(false);
   const [addAnchorEl, setAddAnchorEl] = useState(null);
-  const [deleteAnchorEl, setDeleteAnchorEl] = useState(null);
 
   const handleAddClick = (event) => {
     setAddAnchorEl(event.currentTarget);
     setShowMenuAdd(true);
-  };
-
-  const handleDeleteClick = (event) => {
-    setDeleteAnchorEl(event.currentTarget);
-    setShowMenuDelete(true);
   };
 
     const mutation = useMutation(
@@ -51,10 +44,6 @@ const DepartmentPage = () => {
         setShowMenuAdd(false);
     };
 
-  const handleDeleteClose = () => {
-    setDeleteAnchorEl(null);
-    setShowMenuDelete(false);
-  };
   return (
     <div className="container">
       <div className="Sidebar">

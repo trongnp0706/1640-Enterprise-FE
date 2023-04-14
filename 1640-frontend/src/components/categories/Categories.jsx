@@ -16,7 +16,8 @@ const Categories = () => {
                 ? "Something went wrong!"
                 : isLoading
                     ? "loading"
-                    : data.map((category) => <Category category={category} key={category.id} />)}
+                    : data && data
+                    ? data.map((category) => <Category category={category} key={category.id} />) : "No category, you can delete the table."}
         </div>
     );
 };

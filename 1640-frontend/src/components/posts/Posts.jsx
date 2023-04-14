@@ -18,7 +18,7 @@ const Posts = ({ userId }) => {
                 : isLoading
                     ? "loading"
                     : data && data
-                    ? data.map((post) => <Post post={post} key={post.id} />) : "loading"}
+                    ? data.map((post) => <Post post={post} key={post.id} />) : "No post yet. Why don't you try to post something?"}
         </div>
     );
 };
