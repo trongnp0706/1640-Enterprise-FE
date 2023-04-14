@@ -15,6 +15,7 @@ const Comments = ({ postId }) => {
   const [desc, setDesc] = useState("");
   const { currentUser } = useContext(AuthContext);
   const [is_anonymous, setAnonymous] = useState(false);
+  const [commentId, setCommentId] = useState("");
 
   const { isLoading, error, data } = useQuery(["comments", postId], () =>
     makeRequest.post("comment/all", { idea_id: postId }).then((res) => {
@@ -57,8 +58,21 @@ const Comments = ({ postId }) => {
     setAnchorEl(event.currentTarget);
   };
 
+  const deleteMutation = useMutation(
+      (commentData) => {
+        return makeRequest.delete("comment/delete", { data: commentData });
+      },
+      {
+        onSuccess: () => {
+          // Invalidate and refetch
+          setCommentId("");
+          queryClient.invalidateQueries(["comments"]);
+        },
+      }
+  );
+
   const handleDeleteButtonClick = () => {
-    // Implement delete functionality here
+    deleteMutation.mutate({ id: commentId });
     setAnchorEl(null);
   };
 
@@ -154,8 +168,8 @@ const Comments = ({ postId }) => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleDeleteButtonClick}>
-                  <DeleteIcon/>
+                <MenuItem onClick={ () => {setCommentId(comment?.id) ; handleDeleteButtonClick()}}>
+                  Delete
                 </MenuItem>
               </Menu>
             </div>

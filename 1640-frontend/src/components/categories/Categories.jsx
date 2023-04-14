@@ -1,9 +1,8 @@
-import ManageItem from "../manageItem/ManageItem";
-import "./manageItems.scss";
+import Category from "../category/Category";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
-const ManageItems = () => {
+const Categories = () => {
     const { isLoading, error, data } = useQuery(["categories"], () =>
         makeRequest.get("category/all").then((res) => {
             console.log(res?.data?.data)
@@ -17,9 +16,10 @@ const ManageItems = () => {
                 ? "Something went wrong!"
                 : isLoading
                     ? "loading"
-                    : data.map((category) => <ManageItem category={category} key={category.id} />)}
+                    : data && data
+                    ? data.map((category) => <Category category={category} key={category.id} />) : "No category, you can delete the table."}
         </div>
     );
 };
 
-export default ManageItems;
+export default Categories;

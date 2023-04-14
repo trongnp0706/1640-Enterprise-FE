@@ -14,6 +14,7 @@ import Courses from "../../assets/12.png";
 import Fund from "../../assets/13.png";
 import { AuthContext } from "../../context/authContext";
 import { useContext } from "react";
+import {Link} from "react-router-dom";
 
 const LeftBar = () => {
 
@@ -30,65 +31,30 @@ const LeftBar = () => {
                         />
                         <span>{currentUser?.data?.user?.username}</span>
                     </div>
+                    <hr />
+                    <Link to={`/`}>
+                        <div className="item">
+                            <span>Latest Posts</span>
+                        </div>
+                    </Link>
+                    <Link to={`/popular`}>
                     <div className="item">
-                        <img src={Friends} alt="" />
-                        <span>Friends</span>
+                        <span>Most Popular Posts</span>
                     </div>
+                    </Link>
+                    <Link to={`/view`}>
                     <div className="item">
-                        <img src={Groups} alt="" />
-                        <span>Groups</span>
+                        <span>Most Viewed Post</span>
                     </div>
+                    </Link>
                     <div className="item">
-                        <img src={Market} alt="" />
-                        <span>Marketplace</span>
+                        <span>Statistics</span>
                     </div>
+                    <hr />
                     <div className="item">
-                        <img src={Watch} alt="" />
-                        <span>Watch</span>
-                    </div>
-                    <div className="item">
-                        <img src={Memories} alt="" />
-                        <span>Memories</span>
-                    </div>
-                </div>
-                <hr />
-                <div className="menu">
-                    <span>Your shortcuts</span>
-                    <div className="item">
-                        <img src={Events} alt="" />
-                        <span>Events</span>
-                    </div>
-                    <div className="item">
-                        <img src={Gaming} alt="" />
-                        <span>Gaming</span>
-                    </div>
-                    <div className="item">
-                        <img src={Gallery} alt="" />
-                        <span>Gallery</span>
-                    </div>
-                    <div className="item">
-                        <img src={Videos} alt="" />
-                        <span>Videos</span>
-                    </div>
-                    <div className="item">
-                        <img src={Messages} alt="" />
-                        <span>Messages</span>
-                    </div>
-                </div>
-                <hr />
-                <div className="menu">
-                    <span>Others</span>
-                    <div className="item">
-                        <img src={Fund} alt="" />
-                        <span>Fundraiser</span>
-                    </div>
-                    <div className="item">
-                        <img src={Tutorials} alt="" />
-                        <span>Tutorials</span>
-                    </div>
-                    <div className="item">
-                        <img src={Courses} alt="" />
-                        <span>Courses</span>
+                        <span>
+                            prev 1 next
+                        </span>
                     </div>
                 </div>
             </div>

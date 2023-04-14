@@ -3,9 +3,9 @@ import "./posts.scss";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
-const Posts = ({ }) => {
+const MostViewedPosts = ({ }) => {
     const { isLoading, error, data } = useQuery(["posts"], () =>
-        makeRequest.get("idea/latest?limit=5&page=1").then((res) => {
+        makeRequest.get("idea/most-viewed?limit=5&page=1").then((res) => {
             console.log(res?.data?.data)
             return res?.data?.data;
         })
@@ -18,9 +18,9 @@ const Posts = ({ }) => {
                 : isLoading
                     ? "loading"
                     : data && data
-                    ? data.map((post) => <Post post={post} key={post.id} />) : "No post yet. Why don't you try to post something?"}
+                        ? data.map((post) => <Post post={post} key={post.id} />) : "No post yet. Why don't you try to post something?"}
         </div>
     );
 };
 
-export default Posts;
+export default MostViewedPosts;

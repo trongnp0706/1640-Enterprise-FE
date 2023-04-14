@@ -1,0 +1,36 @@
+@import "../../style.scss";
+
+.manage-title {
+  background-color: aliceblue;
+  border: 2px solid rgba(105, 103, 103, 0.199);
+  border-radius: 5px;
+  margin: 10px;
+  display: inline-block;
+  width: 30%;
+  transition: background-color 0.3s ease-in-out;
+
+  .manage-title-item {
+    display: flex;
+    align-items: center;
+    margin: 10px 20px;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    justify-content: space-between;
+  }
+
+  .manage-title-item-txt {
+    display: flex;
+    align-items: center;
+    margin: 5px 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #444;
+  }
+
+  .manage-title-item-txt span {
+    margin-left: 5px;
+  }
+}
+.manage-title:hover {
+  background-color: #77afc8;
+}
