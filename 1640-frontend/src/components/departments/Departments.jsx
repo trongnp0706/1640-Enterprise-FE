@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
 const Departments = () => {
-    const { isLoading, error, data } = useQuery(["Department"], () =>
+    const { isLoading, error, data } = useQuery(["departments"], () =>
         makeRequest.get("department/all").then((res) => {
             console.log(res?.data?.data)
             return res?.data?.data;

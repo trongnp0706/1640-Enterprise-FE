@@ -1,29 +1,25 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import "./department.scss";
+import {makeRequest} from "../../axios";
 
 const Department = ({ department }) => {
   const queryClient = useQueryClient();
 
-  // const deleteMutation = useMutation(
-  //     (postData) => {
-  //         return makeRequest.delete("idea/delete", { data: postData });
-  //     },
-  //     {
-  //         onSuccess: () => {
-  //             // Invalidate and refetch
-  //             queryClient.invalidateQueries(["posts"]);
-  //         },
-  //     }
-  // );
-  //
-  // const handleDelete = () => {
-  //     console.log(post?.id);
-  //     deleteMutation.mutate({ id: post?.id });
-  // };
+  const deleteMutation = useMutation(
+      (departmentData) => {
+        return makeRequest.delete("department/delete", { data: departmentData });
+      },
+      {
+        onSuccess: () => {
+          // Invalidate and refetch
+          queryClient.invalidateQueries(["departments"]);
+        },
+      }
+  );
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -32,6 +28,7 @@ const Department = ({ department }) => {
   };
 
   const handleDeleteButtonClick = () => {
+    deleteMutation.mutate({ id: department?.id });
     setAnchorEl(null);
   };
 

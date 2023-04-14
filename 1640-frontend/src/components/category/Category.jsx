@@ -1,29 +1,25 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import React, { useState } from "react";
 import "./category.scss";
+import {makeRequest} from "../../axios";
 
 const Category = ({ category }) => {
   const queryClient = useQueryClient();
 
-  // const deleteMutation = useMutation(
-  //     (postData) => {
-  //         return makeRequest.delete("idea/delete", { data: postData });
-  //     },
-  //     {
-  //         onSuccess: () => {
-  //             // Invalidate and refetch
-  //             queryClient.invalidateQueries(["posts"]);
-  //         },
-  //     }
-  // );
-  //
-  // const handleDelete = () => {
-  //     console.log(post?.id);
-  //     deleteMutation.mutate({ id: post?.id });
-  // };
+  const deleteMutation = useMutation(
+      (categoryData) => {
+          return makeRequest.delete("category/delete", { data: categoryData });
+      },
+      {
+          onSuccess: () => {
+              // Invalidate and refetch
+              queryClient.invalidateQueries(["categories"]);
+          },
+      }
+  );
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -32,6 +28,7 @@ const Category = ({ category }) => {
   };
 
   const handleDeleteButtonClick = () => {
+    deleteMutation.mutate({ id: category?.id });
     setAnchorEl(null);
   };
 

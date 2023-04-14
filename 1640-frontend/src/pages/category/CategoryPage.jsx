@@ -1,13 +1,16 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Categories from "../../components/categories/Categories";
 import "./categoryPage.scss";
+import {makeRequest} from "../../axios";
 
 const CategoryPage = () => {
   const queryClient = useQueryClient();
+  const [ticker, setTicker] = useState("");
+  const [category, setCategory] = useState("");
   const [showMenuAdd, setShowMenuAdd] = useState(false);
   const [showMenuDelete, setShowMenuDelete] = useState(false);
   const [addAnchorEl, setAddAnchorEl] = useState(null);
@@ -23,10 +26,32 @@ const CategoryPage = () => {
     setShowMenuDelete(true);
   };
 
+    const mutation = useMutation(
+        (newCategory) => {
+            return makeRequest.post("category/add", newCategory);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(["categories"]);
+            },
+        }
+    );
+
   const handleAddClose = () => {
+    mutation.mutate({id: ticker, category_name: category})
     setAddAnchorEl(null);
     setShowMenuAdd(false);
+    setTicker("");
+    setCategory("");
   };
+
+    const handleAddCloseMenu = () => {
+        setAddAnchorEl(null);
+        setShowMenuAdd(false);
+        setTicker("");
+        setCategory("");
+    };
 
   const handleDeleteClose = () => {
     setDeleteAnchorEl(null);
@@ -68,7 +93,7 @@ const CategoryPage = () => {
           anchorEl={addAnchorEl}
           keepMounted
           open={showMenuAdd}
-          onClose={handleAddClose}
+          onClose={handleAddCloseMenu}
           sx={{
             "& .MuiMenuItem-root": {
               margin: "5px",
@@ -83,10 +108,12 @@ const CategoryPage = () => {
         >
           <div>
             <label style={{ fontWeight: "bold", margin: "10px" }}>
-              Label 1
+              Ticker
             </label>
             <input
               type="text"
+              onChange={(e) => setTicker(e.target.value)}
+              value={ticker}
               style={{
                 width: "85%",
                 height: "70%",
@@ -99,10 +126,12 @@ const CategoryPage = () => {
 
           <div>
             <label style={{ fontWeight: "bold", margin: "10px" }}>
-              Label 2
+              Category Name
             </label>
             <input
               type="text"
+              onChange={(e) => setCategory(e.target.value)}
+              value={category}
               style={{
                 width: "85%",
                 height: "70%",

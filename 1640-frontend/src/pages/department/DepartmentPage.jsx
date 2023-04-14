@@ -1,13 +1,16 @@
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Departments from "../../components/departments/Departments";
 import "./departmentPage.scss";
+import {makeRequest} from "../../axios";
 
 const DepartmentPage = () => {
   const queryClient = useQueryClient();
+    const [ticker, setTicker] = useState("");
+    const [department, setDepartment] = useState("");
   const [showMenuAdd, setShowMenuAdd] = useState(false);
   const [showMenuDelete, setShowMenuDelete] = useState(false);
   const [addAnchorEl, setAddAnchorEl] = useState(null);
@@ -23,10 +26,30 @@ const DepartmentPage = () => {
     setShowMenuDelete(true);
   };
 
+    const mutation = useMutation(
+        (newDepartment) => {
+            return makeRequest.post("department/add", newDepartment);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(["departments"]);
+            },
+        }
+    );
+
   const handleAddClose = () => {
     setAddAnchorEl(null);
     setShowMenuAdd(false);
+    mutation.mutate({id: ticker, department_name: department})
+    setTicker("");
+    setDepartment("");
   };
+
+    const handleAddCloseMenu = () => {
+        setAddAnchorEl(null);
+        setShowMenuAdd(false);
+    };
 
   const handleDeleteClose = () => {
     setDeleteAnchorEl(null);
@@ -68,7 +91,7 @@ const DepartmentPage = () => {
           anchorEl={addAnchorEl}
           keepMounted
           open={showMenuAdd}
-          onClose={handleAddClose}
+          onClose={handleAddCloseMenu}
           sx={{
             "& .MuiMenuItem-root": {
               margin: "5px",
@@ -83,10 +106,12 @@ const DepartmentPage = () => {
         >
           <div>
             <label style={{ fontWeight: "bold", margin: "10px" }}>
-              Label 1
+              Ticker
             </label>
             <input
               type="text"
+              onChange={(e) => setTicker(e.target.value)}
+              value={ticker}
               style={{
                 width: "85%",
                 height: "70%",
@@ -99,10 +124,12 @@ const DepartmentPage = () => {
 
           <div>
             <label style={{ fontWeight: "bold", margin: "10px" }}>
-              Label 2
+              Department Name
             </label>
             <input
               type="text"
+              onChange={(e) => setDepartment(e.target.value)}
+              value={department}
               style={{
                 width: "85%",
                 height: "70%",
