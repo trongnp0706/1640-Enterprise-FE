@@ -1,8 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { useQueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import "./category.scss";
 
 const Category = ({ category }) => {
@@ -43,19 +43,19 @@ const Category = ({ category }) => {
     <div className="manage-title">
       <div className="manage-title-item">
         <span>{category.category_name}</span>
-        <DeleteForeverIcon
-          style={{ marginLeft: "55%" }}
-          onClick={handleDeleteClick}
-        />
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          <MenuItem onClick={handleDeleteButtonClick}>
-            Delete
-          </MenuItem>
-        </Menu>
+        <div>
+          <DeleteForeverIcon
+            style={{ marginLeft: "50%" }}
+            onClick={handleDeleteClick}
+          />
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleDeleteButtonClick}>Delete</MenuItem>
+          </Menu>
+        </div>
       </div>
       <hr />
       <div className="manage-title-item-txt">
