@@ -4,21 +4,19 @@ import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {Button, List} from "@mui/material";
+import { Button } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 import moment from "moment";
-import {useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
-import "./post.scss";
 import Comments from "../comments/Comments";
-import axios from "axios";
-
+import "./post.scss";
 
 const Post = ({ post }) => {
   const [commentOpen, setCommentOpen] = useState(false);
@@ -45,7 +43,6 @@ const Post = ({ post }) => {
     },
     {
       onSuccess: () => {
-        // Invalidate and refetch
         queryClient.invalidateQueries(["posts"]);
       },
     }
@@ -57,22 +54,20 @@ const Post = ({ post }) => {
     },
     {
       onSuccess: () => {
-        // Invalidate and refetch
         queryClient.invalidateQueries(["vote", post.id]);
       },
     }
   );
 
   const viewMutation = useMutation(
-      () => {
-        return makeRequest.patch("idea/view", { idea_id: post?.id });
+    () => {
+      return makeRequest.patch("idea/view", { idea_id: post?.id });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["posts"]);
       },
-      {
-        onSuccess: () => {
-          // Invalidate and refetch
-          queryClient.invalidateQueries(["posts"]);
-        },
-      }
+    }
   );
 
   useEffect(() => {
@@ -109,14 +104,14 @@ const Post = ({ post }) => {
   const [dataComments, setDataComments] = useState([]);
   useEffect(() => {
     const fetchComments = async () =>
-        await axios
-            .get("https://jsonplaceholder.typicode.com/posts/1/comments") //Change api of project
-            .then((res) => {
-              return setDataComments(res.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+      await axios
+        .get("https://jsonplaceholder.typicode.com/posts/1/comments") //Change api of project
+        .then((res) => {
+          return setDataComments(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     fetchComments();
   }, []);
 
@@ -234,6 +229,14 @@ const Post = ({ post }) => {
             Comments
           </div>
 
+          <div className="category">
+            <span>Category</span>
+          </div>
+
+          <div className="Year">
+            <span style={{ fontWeight: "bold" }}>Year</span>
+          </div>
+
           <div
             className="view"
             onMouseOver={() => setUnderline(true)}
@@ -243,6 +246,7 @@ const Post = ({ post }) => {
               {roundedViewCount} Views
             </span>
           </div>
+
           <div className="download">
             <Button>Download</Button>
           </div>
