@@ -9,7 +9,7 @@ const Register = () => {
     email: "",
     password: "",
     role_ticker: "USR",
-    department_id: "FDP",
+    department_id: "N/A",
   });
   const [err, setErr] = useState(null);
 
@@ -64,30 +64,7 @@ const Register = () => {
               name="password"
               onChange={handleChange}
             />
-            <label for="role">Role</label>
-            <select
-              id="role"
-              name="role_ticker"
-              value={inputs.role_ticker}
-              onChange={handleChange}
-            >
-              <option value="USR">USR</option>
-              <option value="SAD">SAD</option>
-              <option value="SAM">SAM</option>
-            </select>
 
-            <label for="department">Department</label>
-
-            <select
-              id="department"
-              name="department_id"
-              value={inputs.department_id}
-              onChange={handleChange}
-            >
-              <option value="FDP">FDP</option>
-              <option value="SDP">SDP</option>
-              <option value="TDP">TDP</option>
-            </select>
             {err && <div>{err.message}</div>}
             <button onClick={handleClick}>Register</button>
           </form>

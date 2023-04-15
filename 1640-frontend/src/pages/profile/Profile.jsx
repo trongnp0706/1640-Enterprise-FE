@@ -11,7 +11,7 @@ const Profile = () => {
   const { currentUser } = useContext(AuthContext);
 
   const userId = useLocation().pathname.split("/")[2];
-  const { isLoading, error, data } = useQuery(["user"], () =>
+  const { isLoading, error, data } = useQuery(["user", userId], () =>
     makeRequest.get("user/" + userId).then((res) => {
       return res.data;
     })
@@ -45,18 +45,19 @@ const Profile = () => {
               </ul>
               {isLoading ? (
                 "loading"
-              ) : userId === currentUser?.data?.user?.id ? (
+              ) : userId === currentUser?.data?.user?.id || currentUser.data.user.role_ticker === "SAD" ? (
                 <button className="btn" onClick={() => setOpenUpdate(true)}>
                   Update
                 </button>
               ) : (
-                <button className="btn">Follow</button>
+                <>
+                </>
               )}
             </div>
           </div>
         </>
       )}
-      {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
+      {openUpdate && <Update setOpenUpdate={setOpenUpdate} userData={data} />}
     </div>
   );
 };

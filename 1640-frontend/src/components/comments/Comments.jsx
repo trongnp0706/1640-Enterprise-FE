@@ -143,9 +143,9 @@ const Comments = ({ postId }) => {
                     alt=""
                     style={{ marginLeft: "10px", marginTop: "10px" }}
                   />
-                  <div className="info">
+                  <div className="comment-info">
                     <span>{comment.username}</span>
-                    <span className="date">
+                    <span className="comment-date">
                       {moment(comment.createdAt).fromNow()}
                     </span>
                     <p>{comment.content}</p>
