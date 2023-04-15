@@ -31,66 +31,44 @@ const LeftBar = () => {
             to={`/`}
             style={{
               textDecoration: "none",
-              color: "black",
+              color: "blue",
               fontWeight: "bold",
             }}
           >
             <div className="item">
               <span>Latest Posts</span>
             </div>
-            <div class="image-and-title">
-              <div className="image">
-                <img src={Image} alt=""></img>
-              </div>
-              <div className="title">
-                <span>title</span>
-                <p>49 votes, 28 comments, Mar 26</p>
-              </div>
-            </div>
           </Link>
           <Link
             to={`/popular`}
             style={{
               textDecoration: "none",
-              color: "black",
+              color: "blue",
               fontWeight: "bold",
             }}
           >
             <div className="item">
               <span>Most Popular Posts</span>
             </div>
-            <div class="image-and-title">
-              <div className="image">
-                <img src={Image} alt=""></img>
-              </div>
-              <div className="title">
-                <span>title</span>
-                <p>49 votes, 28 comments, Mar 26</p>
-              </div>
-            </div>
           </Link>
           <Link
             to={`/view`}
             style={{
               textDecoration: "none",
-              color: "black",
+              color: "blue",
               fontWeight: "bold",
             }}
           >
             <div className="item">
               <span>Most Viewed Post</span>
             </div>
-            <div class="image-and-title">
-              <div className="image">
-                <img src={Image} alt=""></img>
-              </div>
-              <div className="title">
-                <span>title</span>
-                <p>49 votes, 28 comments, Mar 26</p>
-              </div>
-            </div>
           </Link>
-          <div className="item">
+          <div className="item"
+               style={{
+                 textDecoration: "none",
+                 color: "blue",
+                 fontWeight: "bold",
+               }}>
             <span>Statistics</span>
           </div>
           <hr />

@@ -230,11 +230,11 @@ const Post = ({ post }) => {
           </div>
 
           <div className="category">
-            <span>Category</span>
+            <span>@{post.category_id}</span>
           </div>
 
           <div className="Year">
-            <span style={{ fontWeight: "bold" }}>Year</span>
+            <span style={{ fontWeight: "bold" }}>@{post.academic_year}</span>
           </div>
 
           <div
