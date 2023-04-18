@@ -2,10 +2,13 @@ import Post from "../post/Post";
 import "./posts.scss";
 import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
+import {PageContext} from "../../context/pageContext";
+import {useContext} from "react";
 
 const Posts = ({ }) => {
-    const { isLoading, error, data } = useQuery(["posts"], () =>
-        makeRequest.get("idea/latest?limit=5&page=1").then((res) => {
+    const { currentPage } = useContext(PageContext);
+    const { isLoading, error, data } = useQuery(["posts", currentPage], () =>
+        makeRequest.get(`idea/latest?limit=5&page=${currentPage}`).then((res) => {
             console.log(res?.data?.data)
             return res?.data?.data;
         })

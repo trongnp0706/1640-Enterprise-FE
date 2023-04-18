@@ -48,7 +48,7 @@ const Navbar = () => {
         <input type="text" placeholder="Search..." />
       </div>
       <div className="right">
-        {currentUser.data.user.role_ticker === "SAD" ? (
+        {currentUser.data.user.role_ticker === "SAD" || currentUser.data.user.role_ticker === "QAM" ? (
           <>
             <Link to={`/manage`}>
               <FolderSharedIcon
